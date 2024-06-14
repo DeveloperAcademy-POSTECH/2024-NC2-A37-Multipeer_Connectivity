@@ -51,6 +51,9 @@
 		67EB9E782C1C86A200AA6A1A /* Yakssok */ = {
 			isa = PBXGroup;
 			children = (
+				67EB9E892C1C8D4400AA6A1A /* Managers */,
+				67EB9E882C1C8D3600AA6A1A /* Helpers */,
+				67EB9E872C1C8D2E00AA6A1A /* Views */,
 				67EB9E792C1C86A200AA6A1A /* YakssokApp.swift */,
 				67EB9E7B2C1C86A200AA6A1A /* ContentView.swift */,
 				67EB9E7D2C1C86A300AA6A1A /* Assets.xcassets */,
@@ -65,6 +68,35 @@
 				67EB9E802C1C86A300AA6A1A /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		67EB9E872C1C8D2E00AA6A1A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		67EB9E882C1C8D3600AA6A1A /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				67EB9E8A2C1C8D8800AA6A1A /* Extensions */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		67EB9E892C1C8D4400AA6A1A /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		67EB9E8A2C1C8D8800AA6A1A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
