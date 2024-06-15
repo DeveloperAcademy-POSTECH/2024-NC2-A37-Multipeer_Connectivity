@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		67412A492C1DC3F4005F8883 /* WeeklyCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67412A482C1DC3F4005F8883 /* WeeklyCalendar.swift */; };
 		67EB9E7A2C1C86A200AA6A1A /* YakssokApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67EB9E792C1C86A200AA6A1A /* YakssokApp.swift */; };
 		67EB9E7C2C1C86A200AA6A1A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67EB9E7B2C1C86A200AA6A1A /* ContentView.swift */; };
 		67EB9E7E2C1C86A300AA6A1A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 67EB9E7D2C1C86A300AA6A1A /* Assets.xcassets */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		67412A482C1DC3F4005F8883 /* WeeklyCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyCalendar.swift; sourceTree = "<group>"; };
 		67EB9E762C1C86A200AA6A1A /* Yakssok.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yakssok.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67EB9E792C1C86A200AA6A1A /* YakssokApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YakssokApp.swift; sourceTree = "<group>"; };
 		67EB9E7B2C1C86A200AA6A1A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 			children = (
 				67EB9E8A2C1C8D8800AA6A1A /* Extensions */,
 				67EB9E8D2C1C925500AA6A1A /* TimeBlock.swift */,
+				67412A482C1DC3F4005F8883 /* WeeklyCalendar.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -180,6 +183,7 @@
 				67EB9E7C2C1C86A200AA6A1A /* ContentView.swift in Sources */,
 				67EB9E8C2C1C8FFE00AA6A1A /* Color+Extension.swift in Sources */,
 				67EB9E7A2C1C86A200AA6A1A /* YakssokApp.swift in Sources */,
+				67412A492C1DC3F4005F8883 /* WeeklyCalendar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

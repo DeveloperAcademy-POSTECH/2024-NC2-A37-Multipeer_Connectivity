@@ -9,8 +9,6 @@
 import SwiftUI
 import UIKit
 
-// TODO: - 구조 변경
-
 struct TimeBlock: View {
     // TODO: - dotStyles 2차원 배열을 날짜 정보도 함께 담고 있는 데이터 구조로 변경
     @State private var dotStyles: [[TimeDotStyle]] = Array(repeating: Array(repeating: .none, count: 7), count: 16)
