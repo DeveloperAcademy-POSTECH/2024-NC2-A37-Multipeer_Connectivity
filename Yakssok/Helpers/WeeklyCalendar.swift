@@ -1,0 +1,94 @@
+//
+//  WeeklyCalendar.swift
+//  Yakssok
+//
+//  Created by Eom Chanwoo on 6/15/24.
+//
+
+import SwiftUI
+
+struct WeeklyCalendar: View {
+    private let calendar = Calendar.current
+    private let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "d"
+        return formatter
+    }()
+    
+    private var daySymbols: [String] {
+        let symbols = calendar.shortWeekdaySymbols
+        return Array(symbols[calendar.firstWeekday-1..<symbols.count] + symbols[0..<calendar.firstWeekday-1])
+    }
+    
+    var body: some View {
+        VStack {
+            HStack {
+                ForEach(daySymbols, id: \.self) { symbol in
+                    Text(symbol)
+                        .font(.caption2)
+                        .foregroundStyle(.gray)
+                        .frame(maxWidth: .infinity)
+                }
+            }
+            .padding(.horizontal, 32)
+            
+            TabView {
+                ForEach(generateWeeks(), id: \.weekStart) { week in
+                    HStack {
+                        ForEach(week.dates, id: \.self) { date in
+                            let day = dateFormatter.string(from: date)
+                            Text(day)
+                                .font(.title2)
+                                .frame(maxWidth: .infinity)
+                        }
+                    }
+                    .padding(.horizontal)
+                    .padding(.vertical, 8)
+                    .background(.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 30))
+                    .padding(.horizontal)
+                }
+            }
+            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+            .frame(height: 50)
+        }
+    }
+}
+
+extension WeeklyCalendar {
+    private struct Week: Identifiable {
+        let id = UUID()
+        let weekStart: Date
+        let dates: [Date]
+        let year: Int
+        let month: Int
+        let weekOfMonth: Int
+    }
+    
+    private func generateWeeks() -> [Week] {
+        var weeks: [Week] = []
+        let today = Date()
+        let startOfWeek = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: today))!
+        
+        for weekIndex in 0..<100 { // 100주간 데이터 생성
+            var week: [Date] = []
+            for dayIndex in 0..<7 {
+                let date = calendar.date(byAdding: .day, value: (weekIndex * 7) + dayIndex, to: startOfWeek)!
+                week.append(date)
+            }
+            let weekStart = week.first!
+            let components = calendar.dateComponents([.year, .month, .weekOfMonth], from: weekStart)
+            let year = components.year!
+            let month = components.month!
+            let weekOfMonth = components.weekOfMonth!
+            weeks.append(Week(weekStart: weekStart, dates: week, year: year, month: month, weekOfMonth: weekOfMonth))
+        }
+        return weeks
+    }
+}
+
+struct WeeklyCalendar_Previews: PreviewProvider {
+    static var previews: some View {
+        WeeklyCalendar()
+    }
+}

@@ -9,11 +9,9 @@
 import SwiftUI
 import UIKit
 
-// TODO: - 구조 변경
-
 struct TimeBlock: View {
     // TODO: - dotStyles 2차원 배열을 날짜 정보도 함께 담고 있는 데이터 구조로 변경
-    @State private var dotStyles: [[timeDotStyle]] = Array(repeating: Array(repeating: .none, count: 7), count: 16)
+    @State private var dotStyles: [[TimeDotStyle]] = Array(repeating: Array(repeating: .none, count: 7), count: 16)
     @State private var currentColumn: Int? = nil
     @State private var isErasing: Bool = false
     @State private var dragStartRow: Int? = nil
@@ -26,7 +24,7 @@ struct TimeBlock: View {
             ForEach(0..<dotStyles.count, id: \.self) { row in
                 HStack(spacing: spacing) {
                     ForEach(0..<dotStyles[row].count, id: \.self) { col in
-                        timeDot(style: $dotStyles[row][col])
+                        TimeDot(style: $dotStyles[row][col])
                     }
                 }
             }
@@ -77,7 +75,7 @@ extension TimeBlock {
             }
         } else {
             // Preserve existing rows
-            var existingRows: [Int: timeDotStyle] = [:]
+            var existingRows: [Int: TimeDotStyle] = [:]
             for row in dotStyles.indices {
                 if dotStyles[row][column] != .none {
                     existingRows[row] = dotStyles[row][column]
@@ -154,8 +152,8 @@ struct TimeBlock_Previews: PreviewProvider {
 private let dotSize: CGFloat = 6
 private let spacing: CGFloat = 10
 
-struct timeDot: View {
-    @Binding var style: timeDotStyle
+struct TimeDot: View {
+    @Binding var style: TimeDotStyle
     
     var body: some View {
         Circle()
@@ -169,7 +167,7 @@ struct timeDot: View {
     }
 }
 
-enum timeDotStyle {
+enum TimeDotStyle {
     case none
     case start
     case mid
