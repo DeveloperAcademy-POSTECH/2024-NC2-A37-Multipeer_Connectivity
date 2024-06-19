@@ -23,7 +23,10 @@ extension Color {
 }
 
 struct AppColor {
+    static let black = Color(hex: "242424")
+    static let white = Color(hex: "FFFFFF")
+    static let darkgray = Color(hex: "959393")
     static let mint = Color(hex: "66D9CB")
     static let background = Color(hex: "F4F4F4")
     static let orange = Color(hex: "F12B1E")
-}
+    }

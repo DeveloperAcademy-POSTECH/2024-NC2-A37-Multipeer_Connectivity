@@ -9,6 +9,7 @@
 import SwiftUI
 import UIKit
 
+
 struct TimeBlock: View {
     // TODO: - dotStyles 2차원 배열을 날짜 정보도 함께 담고 있는 데이터 구조로 변경
     @State private var dotStyles: [[TimeDotStyle]] = Array(repeating: Array(repeating: .none, count: 7), count: 16)
@@ -16,6 +17,15 @@ struct TimeBlock: View {
     @State private var isErasing: Bool = false
     @State private var dragStartRow: Int? = nil
     @State private var dragEndRow: Int? = nil
+    
+   // @State private var selectedDots: [SelectedDot] = []
+
+
+    
+    
+    let daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"]
+    let timeSlots = ["9am", "10am", "11am", "12pm", "1pm", "2pm", "3pm", "4pm", "5pm", "6pm", "7pm", "8pm"]
+
     
     private let feedbackGenerator = UIImpactFeedbackGenerator(style: .rigid)
     
@@ -28,6 +38,32 @@ struct TimeBlock: View {
                     }
                 }
             }
+          
+
+            
+            
+            
+            Text("Selected Dots:")
+                .font(.headline)
+                .padding()
+/*
+            ForEach(dotStyles.indices, id: \.self) { row in
+                ForEach(dotStyles[row].indices, id: \.self) { col in
+                    if dotStyles[row][col] == .start || dotStyles[row][col] == .end {
+                        let column = currentColumn ?? col
+                        let startRow = dragStartRow ?? row
+                        let endRow = dragEndRow ?? row
+                        
+                        if dotStyles[row][col] == .start {
+                            Text("Start Dot:  \(daysOfWeek[column]), \(timeSlots[startRow])")
+                                .padding(.horizontal)
+                        } else if dotStyles[row][col] == .end {
+                            Text("Start Dot:  \(daysOfWeek[column]), \(timeSlots[endRow])")
+                                .padding(.horizontal)
+                        }
+                    }
+                }
+            }*/
         }
         .gesture(DragGesture(minimumDistance: 0)
             .onChanged { value in
@@ -40,7 +76,27 @@ struct TimeBlock: View {
         .onAppear {
             feedbackGenerator.prepare()
         }
+        .overlay(
+                    VStack {
+                        if let startColumn = currentColumn,
+                           let startRow = dragStartRow,
+                           let endRow = dragEndRow,
+                           dotStyles.indices.contains(startRow) && dotStyles.indices.contains(endRow) {
+                            Text("Start Dot: Column \(startColumn), Row \(startRow)")
+                                .padding()
+                            Text("End Dot: Column \(startColumn), Row \(endRow)")
+                                .padding()
+                        }
+                    }
+                    .frame(maxWidth: .infinity, alignment: .topLeading)
+                    .padding(), alignment: .topLeading
+                )
+        
+        
+            
+        
     }
+    
 }
 
 extension TimeBlock {
@@ -134,6 +190,8 @@ extension TimeBlock {
                 }
             }
         }
+//ㄴ
+            
     }
     
     private func finalizeDrag() {
@@ -158,7 +216,7 @@ struct TimeDot: View {
     var body: some View {
         Circle()
             .frame(width: dotSize, height: dotSize)
-            .foregroundStyle(.gray)
+            .foregroundStyle(AppColor.darkgray)
             .padding(spacing)
             .contentShape(Rectangle()) // 터치 영역 넓힘
             .overlay {
@@ -195,4 +253,12 @@ enum TimeDotStyle {
             }
         }
     }
+}
+
+
+
+struct SelectedDot: Hashable {
+    let startColumn: Int
+    let startRow: Int
+    let endRow: Int
 }
