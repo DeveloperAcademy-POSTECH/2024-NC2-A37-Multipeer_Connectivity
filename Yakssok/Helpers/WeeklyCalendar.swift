@@ -30,28 +30,38 @@ struct WeeklyCalendar: View {
                         .frame(maxWidth: .infinity)
                 }
             }
-            .padding(.horizontal, 32)
+            .padding(.horizontal, 56)
             
-            TabView {
-                ForEach(generateWeeks(), id: \.weekStart) { week in
-                    HStack {
-                        ForEach(week.dates, id: \.self) { date in
-                            let day = dateFormatter.string(from: date)
-                            Text(day)
-                                .font(.title2)
-                                .frame(maxWidth: .infinity)
+            ScrollView(.horizontal, showsIndicators: false) {
+                LazyHStack(spacing: 0) {
+                    Spacer().frame(width: 36)
+                    ForEach(generateWeeks(), id: \.weekStart) { week in
+                        HStack(spacing: 10) {
+                            ForEach(week.dates, id: \.self) { date in
+                                let day = dateFormatter.string(from: date)
+                                Text(day)
+                                    .font(.system(size: 20))
+                                    .frame(minWidth: 26)
+                            }
                         }
+                        .padding(.horizontal)
+                        .padding(.vertical, 8)
+                        .background(.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 30))
+                        .padding(.horizontal, 8)
+                        
+                        RoundedRectangle(cornerRadius: 30)
+                            .frame(width: 28)
+                            .padding(7.5)
+                            .padding(.horizontal, 14)
+                            .foregroundStyle(.white)
                     }
-                    .padding(.horizontal)
-                    .padding(.vertical, 8)
-                    .background(.white)
-                    .clipShape(RoundedRectangle(cornerRadius: 30))
-                    .padding(.horizontal)
                 }
+                .frame(height: 50)
             }
-            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-            .frame(height: 50)
+            .scrollTargetBehavior(.paging)
         }
+        .padding(.horizontal, 16)
     }
 }
 
@@ -92,3 +102,197 @@ struct WeeklyCalendar_Previews: PreviewProvider {
         WeeklyCalendar()
     }
 }
+
+//import SwiftUI
+//
+//struct WeeklyCalendar: View {
+//    private let calendar = Calendar.current
+//    private let dateFormatter: DateFormatter = {
+//        let formatter = DateFormatter()
+//        formatter.dateFormat = "d"
+//        return formatter
+//    }()
+//    
+//    private var daySymbols: [String] {
+//        let symbols = calendar.shortWeekdaySymbols
+//        return Array(symbols[calendar.firstWeekday-1..<symbols.count] + symbols[0..<calendar.firstWeekday-1])
+//    }
+//    
+//    var body: some View {
+//        VStack {
+//            HStack {
+//                ForEach(daySymbols, id: \.self) { symbol in
+//                    Text(symbol)
+//                        .font(.caption2)
+//                        .foregroundStyle(.gray)
+//                        .frame(maxWidth: .infinity)
+//                }
+//            }
+//            .padding(.horizontal, 48)
+//            
+//            ScrollView(.horizontal, showsIndicators: false) {
+//                HStack {
+//                    Spacer().frame(width: 14)
+//                    LazyHStack(spacing: 0) {
+//                        ForEach(generateWeeks(), id: \.weekStart) { week in
+//                            Spacer().frame(width: 14)
+//                            HStack(spacing: 10) {
+//                                ForEach(week.dates, id: \.self) { date in
+//                                    let day = dateFormatter.string(from: date)
+//                                    Text(day)
+//                                        .font(.system(size: 20))
+//                                        .frame(minWidth: 26)
+//                                }
+//                            }
+//                            .padding(.horizontal)
+//                            .padding(.vertical, 8)
+//                            .background(.white)
+//                            .clipShape(RoundedRectangle(cornerRadius: 30))
+//                            .padding(.horizontal, 8)
+//                        }
+//                    }
+//                    .scrollTargetLayout()
+//                    .frame(height: 50)
+//                }
+//            }
+//            .scrollTargetBehavior(CustomScrollTargetBehavior())
+//        }
+//        .padding(.horizontal, 8)
+//    }
+//}
+//
+//extension WeeklyCalendar {
+//    private struct Week: Identifiable {
+//        let id: UUID = UUID()
+//        let weekStart: Date
+//        let dates: [Date]
+//        let year: Int
+//        let month: Int
+//        let weekOfMonth: Int
+//    }
+//    
+//    private func generateWeeks() -> [Week] {
+//        var weeks: [Week] = []
+//        let today = Date()
+//        let startOfWeek = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: today))!
+//        
+//        for weekIndex in 0..<100 { // 100주간 데이터 생성
+//            var week: [Date] = []
+//            for dayIndex in 0..<7 {
+//                let date = calendar.date(byAdding: .day, value: (weekIndex * 7) + dayIndex, to: startOfWeek)!
+//                week.append(date)
+//            }
+//            let weekStart = week.first!
+//            let components = calendar.dateComponents([.year, .month, .weekOfMonth], from: weekStart)
+//            let year = components.year!
+//            let month = components.month!
+//            let weekOfMonth = components.weekOfMonth!
+//            weeks.append(Week(weekStart: weekStart, dates: week, year: year, month: month, weekOfMonth: weekOfMonth))
+//        }
+//        return weeks
+//    }
+//}
+//
+//struct WeeklyCalendar_Previews: PreviewProvider {
+//    static var previews: some View {
+//        WeeklyCalendar()
+//    }
+//}
+//struct CustomScrollTargetBehavior: ScrollTargetBehavior {
+//    func updateTarget(_ target: inout ScrollTarget, context: TargetContext) {
+//        if context.velocity.dx > 0 {
+//            target.rect.origin.x = context.originalTarget.rect.maxX
+//        } else if context.velocity.dx < 0 {
+//            target.rect.origin.x = context.originalTarget.rect.minX
+//        }
+//    }
+//}
+
+//import SwiftUI
+//
+//struct WeeklyCalendar: View {
+//    private let calendar = Calendar.current
+//    private let dateFormatter: DateFormatter = {
+//        let formatter = DateFormatter()
+//        formatter.dateFormat = "d"
+//        return formatter
+//    }()
+//    
+//    private var daySymbols: [String] {
+//        let symbols = calendar.shortWeekdaySymbols
+//        return Array(symbols[calendar.firstWeekday-1..<symbols.count] + symbols[0..<calendar.firstWeekday-1])
+//    }
+//    
+//    var body: some View {
+//        VStack {
+//            HStack {
+//                ForEach(daySymbols, id: \.self) { symbol in
+//                    Text(symbol)
+//                        .font(.caption2)
+//                        .foregroundStyle(.gray)
+//                        .frame(maxWidth: .infinity)
+//                }
+//            }
+//            .padding(.horizontal, 32)
+//            
+//            TabView {
+//                ForEach(generateWeeks(), id: \.weekStart) { week in
+//                    HStack {
+//                        ForEach(week.dates, id: \.self) { date in
+//                            let day = dateFormatter.string(from: date)
+//                            Text(day)
+//                                .font(.system(size: 20))
+//                                .frame(maxWidth: .infinity)
+//                        }
+//                    }
+//                    .padding(.horizontal)
+//                    .padding(.vertical, 8)
+//                    .background(.white)
+//                    .clipShape(RoundedRectangle(cornerRadius: 30))
+//                    .padding(.horizontal)
+//                }
+//            }
+//            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+//            .frame(height: 50)
+//        }
+//        .padding(.horizontal, 24)
+//    }
+//}
+//
+//extension WeeklyCalendar {
+//    private struct Week: Identifiable {
+//        let id = UUID()
+//        let weekStart: Date
+//        let dates: [Date]
+//        let year: Int
+//        let month: Int
+//        let weekOfMonth: Int
+//    }
+//    
+//    private func generateWeeks() -> [Week] {
+//        var weeks: [Week] = []
+//        let today = Date()
+//        let startOfWeek = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: today))!
+//        
+//        for weekIndex in 0..<100 { // 100주간 데이터 생성
+//            var week: [Date] = []
+//            for dayIndex in 0..<7 {
+//                let date = calendar.date(byAdding: .day, value: (weekIndex * 7) + dayIndex, to: startOfWeek)!
+//                week.append(date)
+//            }
+//            let weekStart = week.first!
+//            let components = calendar.dateComponents([.year, .month, .weekOfMonth], from: weekStart)
+//            let year = components.year!
+//            let month = components.month!
+//            let weekOfMonth = components.weekOfMonth!
+//            weeks.append(Week(weekStart: weekStart, dates: week, year: year, month: month, weekOfMonth: weekOfMonth))
+//        }
+//        return weeks
+//    }
+//}
+//
+//struct WeeklyCalendar_Previews: PreviewProvider {
+//    static var previews: some View {
+//        WeeklyCalendar()
+//    }
+//}

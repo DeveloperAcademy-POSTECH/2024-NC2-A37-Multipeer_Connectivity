@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		67412A492C1DC3F4005F8883 /* WeeklyCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67412A482C1DC3F4005F8883 /* WeeklyCalendar.swift */; };
+		67412A4B2C1DDE75005F8883 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67412A4A2C1DDE75005F8883 /* MainView.swift */; };
+		675EE8DA2C21B3CE000F4B58 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 675EE8D92C21B3CE000F4B58 /* DataManager.swift */; };
 		67EB9E7A2C1C86A200AA6A1A /* YakssokApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67EB9E792C1C86A200AA6A1A /* YakssokApp.swift */; };
 		67EB9E7C2C1C86A200AA6A1A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67EB9E7B2C1C86A200AA6A1A /* ContentView.swift */; };
 		67EB9E7E2C1C86A300AA6A1A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 67EB9E7D2C1C86A300AA6A1A /* Assets.xcassets */; };
@@ -18,6 +20,8 @@
 
 /* Begin PBXFileReference section */
 		67412A482C1DC3F4005F8883 /* WeeklyCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyCalendar.swift; sourceTree = "<group>"; };
+		67412A4A2C1DDE75005F8883 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		675EE8D92C21B3CE000F4B58 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		67EB9E762C1C86A200AA6A1A /* Yakssok.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yakssok.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67EB9E792C1C86A200AA6A1A /* YakssokApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YakssokApp.swift; sourceTree = "<group>"; };
 		67EB9E7B2C1C86A200AA6A1A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -79,6 +83,7 @@
 		67EB9E872C1C8D2E00AA6A1A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				67412A4A2C1DDE75005F8883 /* MainView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -96,6 +101,7 @@
 		67EB9E892C1C8D4400AA6A1A /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				675EE8D92C21B3CE000F4B58 /* DataManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -180,7 +186,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				67EB9E8E2C1C925500AA6A1A /* TimeBlock.swift in Sources */,
+				67412A4B2C1DDE75005F8883 /* MainView.swift in Sources */,
 				67EB9E7C2C1C86A200AA6A1A /* ContentView.swift in Sources */,
+				675EE8DA2C21B3CE000F4B58 /* DataManager.swift in Sources */,
 				67EB9E8C2C1C8FFE00AA6A1A /* Color+Extension.swift in Sources */,
 				67EB9E7A2C1C86A200AA6A1A /* YakssokApp.swift in Sources */,
 				67412A492C1DC3F4005F8883 /* WeeklyCalendar.swift in Sources */,

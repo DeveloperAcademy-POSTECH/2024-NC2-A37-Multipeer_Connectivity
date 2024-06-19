@@ -11,6 +11,7 @@ import UIKit
 
 struct TimeBlock: View {
     // TODO: - dotStyles 2차원 배열을 날짜 정보도 함께 담고 있는 데이터 구조로 변경
+    // TODO: - 현재일 이전 날짜 disabled
     @State private var dotStyles: [[TimeDotStyle]] = Array(repeating: Array(repeating: .none, count: 7), count: 16)
     @State private var currentColumn: Int? = nil
     @State private var isErasing: Bool = false
@@ -20,26 +21,11 @@ struct TimeBlock: View {
     private let feedbackGenerator = UIImpactFeedbackGenerator(style: .rigid)
     
     var body: some View {
-        VStack(spacing: 0) {
-            ForEach(0..<dotStyles.count, id: \.self) { row in
-                HStack(spacing: spacing) {
-                    ForEach(0..<dotStyles[row].count, id: \.self) { col in
-                        TimeDot(style: $dotStyles[row][col])
-                    }
-                }
-            }
+        ZStack(alignment: .topLeading) {
+            TimeBlockTable
+            TimeDetailHeader
         }
-        .gesture(DragGesture(minimumDistance: 0)
-            .onChanged { value in
-                handleDrag(at: value.location)
-            }
-            .onEnded { _ in
-                finalizeDrag()
-            }
-        )
-        .onAppear {
-            feedbackGenerator.prepare()
-        }
+        .padding(.horizontal)
     }
 }
 
@@ -141,6 +127,48 @@ extension TimeBlock {
         dragStartRow = nil
         dragEndRow = nil
     }
+    
+    private func clearDots() {
+        for row in dotStyles.indices {
+            for col in dotStyles[row].indices {
+                if dotStyles[row][col] != .none {
+                    dotStyles[row][col] = .none
+                }
+            }
+        }
+    }
+    
+    private var TimeBlockTable: some View {
+        VStack {
+            VStack(spacing: 0) {
+                ForEach(0..<dotStyles.count, id: \.self) { row in
+                    HStack(spacing: spacing) {
+                        ForEach(0..<dotStyles[row].count, id: \.self) { col in
+                            TimeDot(style: $dotStyles[row][col])
+                        }
+                    }
+                }
+            }
+            .padding(.horizontal)
+            .padding(.vertical, 10)
+            .background(.white)
+            .clipShape(RoundedRectangle(cornerRadius: 20))
+            .gesture(DragGesture(minimumDistance: 0)
+                .onChanged { value in
+                    handleDrag(at: value.location)
+                }
+                .onEnded { _ in
+                    finalizeDrag()
+                }
+            )
+            .onAppear {
+                feedbackGenerator.prepare()
+            }
+            ClearButtonRow {
+                clearDots()
+            }
+        }
+    }
 }
 
 struct TimeBlock_Previews: PreviewProvider {
@@ -152,7 +180,7 @@ struct TimeBlock_Previews: PreviewProvider {
 private let dotSize: CGFloat = 6
 private let spacing: CGFloat = 10
 
-struct TimeDot: View {
+private struct TimeDot: View {
     @Binding var style: TimeDotStyle
     
     var body: some View {
@@ -195,4 +223,49 @@ enum TimeDotStyle {
             }
         }
     }
+}
+
+private var TimeDetailHeader: some View {
+    VStack(spacing: 12.8) {
+        Spacer().frame(height: 4)
+        Text("09:00")
+        Text("10:00")
+        Text("11:00")
+        Text("12:00")
+        Text("13:00")
+        Text("14:00")
+        Text("15:00")
+        Text("16:00")
+        Text("17:00")
+        Text("18:00")
+        Text("19:00")
+        Text("20:00")
+        Text("21:00")
+        Text("22:00")
+        Text("23:00")
+        Text("24:00")
+    }
+    .font(.caption2)
+    .foregroundStyle(.gray)
+}
+
+private func ClearButtonRow(clear: @escaping () -> Void) -> some View {
+    return HStack {
+        Spacer()
+        Button{
+            clear()
+        } label: {
+            Text("초기화")
+                .foregroundStyle(.gray)
+                .font(.caption2)
+                .padding(4)
+                .padding(.horizontal, 10)
+                .background(
+                    RoundedRectangle(cornerRadius: 20)
+                        .stroke(.gray, lineWidth: 1)
+                )
+        }
+    }
+    .padding(.horizontal, 48)
+    .padding(.bottom, 8)
 }
