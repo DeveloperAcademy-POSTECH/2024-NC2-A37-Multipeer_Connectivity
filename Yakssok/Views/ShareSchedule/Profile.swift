@@ -37,12 +37,7 @@ struct Profile: View {
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .frame(width: 150, height: 40)
                         
- //                       .cornerRadius(30)
-//                        .overlay(
-//                                RoundedRectangle(cornerRadius: 30)
-//                                    .stroke(AppColor.darkgray, lineWidth: 1)
-//                            )
-                    
+           
                     Button(action: {
                         connectivityManager.updatePeerID(name: displayName)
                     }) {
@@ -56,7 +51,7 @@ struct Profile: View {
                     }
                     
                 }.padding(.bottom)
-            }//.background(.blue)
+            }
             
             
         }
