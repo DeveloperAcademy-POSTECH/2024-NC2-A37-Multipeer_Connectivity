@@ -8,23 +8,24 @@
 import SwiftUI
 
 struct MainView: View {
-    var data: DataManager = DataManager()
+    var dateManager: DateManager = DateManager()
+    var timeDotManager: TimeDotManager = TimeDotManager()
     
     var body: some View {
         ZStack(alignment: .leading) {
             AppColor.background
             VStack(spacing: 0) {
-                MainViewTitle
+                MainViewTitle(month: dateManager.currentMonth)
                 
                 Spacer().frame(height: 32)
                 
-                WeeklyCalendar()
+                WeeklyCalendar(dateManager: dateManager)
                 
-                TimeBlock(data: data)
+                TimeBlock(timeDotManager: timeDotManager, dateManager: dateManager)
                 
                 Spacer().frame(height: 20)
                 
-                ConfirmScheduleButton
+                ConfirmScheduleButton(dateManager: dateManager, timeDotManager: timeDotManager)
             }
         }
         .ignoresSafeArea()
@@ -35,9 +36,10 @@ struct MainView: View {
     MainView()
 }
 
-private var MainViewTitle: some View {
+@ViewBuilder
+private func MainViewTitle(month: Int) -> some View {
     HStack {
-        Text("6월")
+        Text("\(month)월")
             .font(.title2)
             .foregroundStyle(AppColor.mint)
             .bold()
@@ -47,9 +49,16 @@ private var MainViewTitle: some View {
     }
 }
 
-private var ConfirmScheduleButton: some View {
+@ViewBuilder
+private func ConfirmScheduleButton(dateManager: DateManager, timeDotManager: TimeDotManager) -> some View {
     Button {
         // TODO: 공유 뷰로 네비게이트
+        // 선택 시간 디버깅
+        print("\(dateManager.currentMonth)월 \(dateManager.currentWeekOfMonth)주차")
+        let selectedTimes = timeDotManager.calcSelectedTime(dateManager: dateManager)
+        for time in selectedTimes {
+            print("Date: \(time.day), Start: \(dateManager.timeFormatter.string(from: time.startTime)), End: \(dateManager.timeFormatter.string(from: time.endTime)), Duration: \(time.duration)")
+        }
     } label: {
         Label {
             Text("내 스케줄 완성하기")

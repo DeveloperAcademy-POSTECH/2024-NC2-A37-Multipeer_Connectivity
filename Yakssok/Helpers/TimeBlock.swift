@@ -10,223 +10,76 @@ import SwiftUI
 import UIKit
 
 struct TimeBlock: View {
-    // TODO: - dotStyles 2차원 배열을 날짜 정보도 함께 담고 있는 데이터 구조로 변경
-    // TODO: - 현재일 이전 날짜 disabled
-    var data: DataManager
-    
-    @State private var currentColumn: Int? = nil
-    @State private var isErasing: Bool = false
-    @State private var dragStartRow: Int? = nil
-    @State private var dragEndRow: Int? = nil
-    
-    
-    private let feedbackGenerator = UIImpactFeedbackGenerator(style: .rigid)
+    var timeDotManager: TimeDotManager
+    var dateManager: DateManager
     
     var body: some View {
         ZStack(alignment: .topLeading) {
-            TimeBlockTable
+            TimeBlockTable(timeDotManager: timeDotManager, dateManager: dateManager)
             TimeDetailHeader
         }
         .padding(.horizontal)
     }
 }
 
-extension TimeBlock {
-    private func handleDrag(at location: CGPoint) {
-        let totalHeight = dotSize + spacing * 2
-        let totalWidth = dotSize + spacing * 3
-        let row = Int(location.y / totalHeight)
-        let col = Int(location.x / totalWidth)
-        
-        guard row >= 0, row < data.dotStyles.count, col >= 0, col < data.dotStyles[row].count else { return }
-        
-        if currentColumn == nil {
-            currentColumn = col
-            isErasing = data.dotStyles[row][col] != .none
-            dragStartRow = row
-            dragEndRow = row
-        } else if currentColumn != col {
-            return
-        }
-        
-        dragEndRow = row
-        updatedotStyles(for: col)
-    }
-    
-    private func updatedotStyles(for column: Int) {
-        guard let startRow = dragStartRow, let endRow = dragEndRow else { return }
-        
-        if isErasing {
-            for row in min(startRow, endRow)...max(startRow, endRow) {
-                data.dotStyles[row][column] = .none
-                feedbackGenerator.impactOccurred(intensity: 0.5)
-            }
-        } else {
-            // Preserve existing rows
-            var existingRows: [Int: TimeDotStyle] = [:]
-            for row in data.dotStyles.indices {
-                if data.dotStyles[row][column] != .none {
-                    existingRows[row] = data.dotStyles[row][column]
-                }
-            }
-            
-            // Clear current column
-            for row in data.dotStyles.indices {
-                data.dotStyles[row][column] = .none
-            }
-            
-            // Apply existing rows
-            for (row, style) in existingRows {
-                data.dotStyles[row][column] = style
-            }
-            
-            // Apply new dragging rows
-            for row in min(startRow, endRow)...max(startRow, endRow) {
-                if row == min(startRow, endRow) {
-                    data.dotStyles[row][column] = .start
-                } else if row == max(startRow, endRow) {
-                    data.dotStyles[row][column] = .end
-                } else {
-                    data.dotStyles[row][column] = .mid
-                }
-            }
-            feedbackGenerator.impactOccurred(intensity: 0.5)
-        }
-        
-        // Adjust mid dots if their neighbors are erased
-        for row in data.dotStyles.indices {
-            if data.dotStyles[row][column] == .mid {
-                if row > 0 && data.dotStyles[row - 1][column] != .start && data.dotStyles[row - 1][column] != .mid {
-                    data.dotStyles[row][column] = .start
-                }
-                if row < data.dotStyles.count - 1 && data.dotStyles[row + 1][column] != .end && data.dotStyles[row + 1][column] != .mid {
-                    data.dotStyles[row][column] = .end
-                }
-            }
-        }
-        
-        // Adjust start dots if their neighbors are erased
-        for row in data.dotStyles.indices {
-            if data.dotStyles[row][column] == .start {
-                if row < data.dotStyles.count - 1 && data.dotStyles[row + 1][column] != .mid && data.dotStyles[row + 1][column] != .end {
-                    data.dotStyles[row][column] = .none
-                }
-            }
-        }
-        
-        // Adjust end dots if their neighbors are erased
-        for row in data.dotStyles.indices {
-            if data.dotStyles[row][column] == .end {
-                if row > 0 && data.dotStyles[row - 1][column] != .mid && data.dotStyles[row - 1][column] != .start {
-                    data.dotStyles[row][column] = .none
-                }
-            }
-        }
-    }
-    
-    private func finalizeDrag() {
-        currentColumn = nil
-        dragStartRow = nil
-        dragEndRow = nil
-    }
-    
-    private func clearDots() {
-        for row in data.dotStyles.indices {
-            for col in data.dotStyles[row].indices {
-                if data.dotStyles[row][col] != .none {
-                    data.dotStyles[row][col] = .none
-                }
-            }
-        }
-    }
-    
-    private var TimeBlockTable: some View {
-        VStack {
-            VStack(spacing: 0) {
-                ForEach(0..<data.dotStyles.count, id: \.self) { row in
-                    HStack(spacing: spacing) {
-                        ForEach(0..<data.dotStyles[row].count, id: \.self) { col in
-                            TimeDot(data: data, row: row, col: col)
-                        }
+@ViewBuilder
+private func TimeBlockTable(timeDotManager: TimeDotManager, dateManager: DateManager) -> some View {
+    VStack {
+        VStack(spacing: 0) {
+            ForEach(0..<timeDotManager.dotStyles.count, id: \.self) { row in
+                HStack(spacing: TimeDotManager.spacing) {
+                    ForEach(0..<timeDotManager.dotStyles[row].count, id: \.self) { col in
+                        TimeDot(dateManager: dateManager, timeDotManager: timeDotManager, row: row, col: col)
                     }
                 }
             }
-            .padding(.horizontal)
-            .padding(.vertical, 10)
-            .background(.white)
-            .clipShape(RoundedRectangle(cornerRadius: 20))
-            .gesture(DragGesture(minimumDistance: 0)
-                .onChanged { value in
-                    handleDrag(at: value.location)
-                }
-                .onEnded { _ in
-                    finalizeDrag()
-                }
-            )
-            .onAppear {
-                feedbackGenerator.prepare()
+        }
+        .padding(.horizontal)
+        .padding(.vertical, 10)
+        .background(.white)
+        .clipShape(RoundedRectangle(cornerRadius: 20))
+        .gesture(DragGesture(minimumDistance: 0)
+            .onChanged { value in
+                timeDotManager.handleDrag(at: value.location, dateManager: dateManager)
             }
-            ClearButtonRow {
-                clearDots()
+            .onEnded { _ in
+                timeDotManager.finalizeDrag()
             }
+        )
+        .onAppear {
+            timeDotManager.prepareFeedback()
+        }
+        ClearButtonRow {
+            timeDotManager.clearDots()
         }
     }
 }
 
-struct TimeBlock_Previews: PreviewProvider {
-    static var previews: some View {
-        TimeBlock(data: DataManager())
-    }
-}
-
-private let dotSize: CGFloat = 6
-private let spacing: CGFloat = 10
-
 private struct TimeDot: View {
-//    @Binding var style: TimeDotStyle
-    var data: DataManager
+    var dateManager: DateManager
+    var timeDotManager: TimeDotManager
     var row: Int
     var col: Int
     
     var body: some View {
         Circle()
-            .frame(width: dotSize, height: dotSize)
+            .frame(width: TimeDotManager.dotSize, height: TimeDotManager.dotSize)
             .foregroundStyle(.gray)
-            .padding(spacing)
+            .padding(TimeDotManager.spacing)
             .contentShape(Rectangle()) // 터치 영역 넓힘
             .overlay {
-                data.dotStyles[row][col].style
+                if timeDotManager.isPastDay(col: col, dateManager: dateManager) {
+                    if row == 0 {
+                        TimeDotStyle.unavailableStart.style
+                    } else if row == timeDotManager.dotStyles.indices.count - 1 {
+                        TimeDotStyle.unavailableEnd.style
+                    } else {
+                        TimeDotStyle.unavailableMid.style
+                    }
+                } else {
+                    timeDotManager.dotStyles[row][col].style
+                }
             }
-    }
-}
-
-enum TimeDotStyle {
-    case none
-    case start
-    case mid
-    case end
-    
-    @ViewBuilder
-    var style: some View {
-        switch self {
-        case .none:
-            EmptyView()
-        case .start:
-            VStack {
-                Spacer().frame(height: spacing)
-                UnevenRoundedRectangle(cornerRadii: RectangleCornerRadii(topLeading: 10, topTrailing: 10))
-                    .foregroundStyle(AppColor.mint)
-            }
-        case .mid:
-            Rectangle()
-                .foregroundStyle(AppColor.mint)
-        case .end:
-            VStack {
-                UnevenRoundedRectangle(cornerRadii: RectangleCornerRadii(bottomLeading: 10, bottomTrailing: 10))
-                    .foregroundStyle(AppColor.mint)
-                Spacer().frame(height: spacing)
-            }
-        }
     }
 }
 
@@ -273,4 +126,56 @@ private func ClearButtonRow(clear: @escaping () -> Void) -> some View {
     }
     .padding(.horizontal, 48)
     .padding(.bottom, 8)
+}
+
+enum TimeDotStyle {
+    case none
+    case start
+    case mid
+    case end
+    case unavailableStart
+    case unavailableMid
+    case unavailableEnd
+    
+    @ViewBuilder
+    var style: some View {
+        switch self {
+        case .none:
+            EmptyView()
+        case .start:
+            VStack {
+                Spacer().frame(height: TimeDotManager.spacing)
+                UnevenRoundedRectangle(cornerRadii: RectangleCornerRadii(topLeading: 10, topTrailing: 10))
+                    .foregroundStyle(AppColor.mint)
+            }
+        case .mid:
+            Rectangle()
+                .foregroundStyle(AppColor.mint)
+        case .end:
+            VStack {
+                UnevenRoundedRectangle(cornerRadii: RectangleCornerRadii(bottomLeading: 10, bottomTrailing: 10))
+                    .foregroundStyle(AppColor.mint)
+                Spacer().frame(height: TimeDotManager.spacing)
+            }
+        case .unavailableStart:
+            VStack {
+                UnevenRoundedRectangle(cornerRadii: RectangleCornerRadii(topLeading: 10, topTrailing: 10))
+                    .foregroundStyle(.gray.opacity(0.2))
+            }
+        case .unavailableMid:
+            Rectangle()
+                .foregroundStyle(.gray.opacity(0.2))
+        case .unavailableEnd:
+            VStack {
+                UnevenRoundedRectangle(cornerRadii: RectangleCornerRadii(bottomLeading: 10, bottomTrailing: 10))
+                    .foregroundStyle(.gray.opacity(0.2))
+            }
+        }
+    }
+}
+
+struct TimeBlock_Previews: PreviewProvider {
+    static var previews: some View {
+        TimeBlock(timeDotManager: TimeDotManager(), dateManager: DateManager())
+    }
 }
