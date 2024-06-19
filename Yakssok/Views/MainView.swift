@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct MainView: View {
+    var data: DataManager = DataManager()
+    
     var body: some View {
         ZStack(alignment: .leading) {
             AppColor.background
@@ -18,7 +20,7 @@ struct MainView: View {
                 
                 WeeklyCalendar()
                 
-                TimeBlock()
+                TimeBlock(data: data)
                 
                 Spacer().frame(height: 20)
                 
