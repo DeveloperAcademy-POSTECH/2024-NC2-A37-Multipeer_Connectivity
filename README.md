@@ -37,9 +37,127 @@
 
 ## 🛠️ About Code
 
-### Scheduling View  
+### Scheduling View  
 #### 약속 가능 시간 드래깅 제스처 표현
+```swift
 
+enum TimeDotStyle {
+    case none
+    case start
+    case mid
+    case end
+    case unavailableStart
+    case unavailableMid
+    case unavailableEnd
+    
+    @ViewBuilder
+    var style: some View {
+        switch self {
+        case .none:
+            EmptyView()
+        case .start:
+            VStack {
+                Spacer().frame(height: TimeDotManager.spacing)
+                UnevenRoundedRectangle(cornerRadii: RectangleCornerRadii(topLeading: 10, topTrailing: 10))
+                    .foregroundStyle(AppColor.mint)
+            }
+        case .mid:
+            Rectangle()
+                .foregroundStyle(AppColor.mint)
+        case .end:
+            VStack {
+                UnevenRoundedRectangle(cornerRadii: RectangleCornerRadii(bottomLeading: 10, bottomTrailing: 10))
+                    .foregroundStyle(AppColor.mint)
+                Spacer().frame(height: TimeDotManager.spacing)
+            }
+        case .unavailableStart:
+            VStack {
+                UnevenRoundedRectangle(cornerRadii: RectangleCornerRadii(topLeading: 10, topTrailing: 10))
+                    .foregroundStyle(.gray.opacity(0.2))
+            }
+        case .unavailableMid:
+            Rectangle()
+                .foregroundStyle(.gray.opacity(0.2))
+        case .unavailableEnd:
+            VStack {
+                UnevenRoundedRectangle(cornerRadii: RectangleCornerRadii(bottomLeading: 10, bottomTrailing: 10))
+                    .foregroundStyle(.gray.opacity(0.2))
+            }
+        }
+    }
+}
+
+ func updatedotStyles(for column: Int) {
+        guard let startRow = dragStartRow, let endRow = dragEndRow else { return }
+        
+        if isErasing {
+            for row in min(startRow, endRow)...max(startRow, endRow) {
+                dotStyles[row][column] = .none
+                feedbackGenerator.impactOccurred(intensity: 0.5)
+            }
+        } else {
+            // Preserve existing rows
+            var existingRows: [Int: TimeDotStyle] = [:]
+            for row in dotStyles.indices {
+                if dotStyles[row][column] != .none {
+                    existingRows[row] = dotStyles[row][column]
+                }
+            }
+            
+            // Clear current column
+            for row in dotStyles.indices {
+                dotStyles[row][column] = .none
+            }
+            
+            // Apply existing rows
+            for (row, style) in existingRows {
+                dotStyles[row][column] = style
+            }
+            
+            // Apply new dragging rows
+            for row in min(startRow, endRow)...max(startRow, endRow) {
+                if row == min(startRow, endRow) {
+                    dotStyles[row][column] = .start
+                } else if row == max(startRow, endRow) {
+                    dotStyles[row][column] = .end
+                } else {
+                    dotStyles[row][column] = .mid
+                }
+            }
+            feedbackGenerator.impactOccurred(intensity: 0.5)
+        }
+        
+        // Adjust mid dots if their neighbors are erased
+        for row in dotStyles.indices {
+            if dotStyles[row][column] == .mid {
+                if row > 0 && dotStyles[row - 1][column] != .start && dotStyles[row - 1][column] != .mid {
+                    dotStyles[row][column] = .start
+                }
+                if row < dotStyles.count - 1 && dotStyles[row + 1][column] != .end && dotStyles[row + 1][column] != .mid {
+                    dotStyles[row][column] = .end
+                }
+            }
+        }
+        
+        // Adjust start dots if their neighbors are erased
+        for row in dotStyles.indices {
+            if dotStyles[row][column] == .start {
+                if row < dotStyles.count - 1 && dotStyles[row + 1][column] != .mid && dotStyles[row + 1][column] != .end {
+                    dotStyles[row][column] = .none
+                }
+            }
+        }
+        
+        // Adjust end dots if their neighbors are erased
+        for row in dotStyles.indices {
+            if dotStyles[row][column] == .end {
+                if row > 0 && dotStyles[row - 1][column] != .mid && dotStyles[row - 1][column] != .start {
+                    dotStyles[row][column] = .none
+                }
+            }
+        }
+    }
+```
 
 ### MultipeerConnectivity  
 #### 데이터 전송 및 연결 상태 변화 관리
