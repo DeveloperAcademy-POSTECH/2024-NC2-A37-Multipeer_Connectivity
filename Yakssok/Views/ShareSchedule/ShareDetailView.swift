@@ -7,64 +7,91 @@
 import SwiftUI
 import MultipeerConnectivity
 
+
 struct ShareDetailView: View {
     @Binding var selectedPeer: MCPeerID?
     @Binding var messageToSend : String
     @Binding var receivedPeers: [String]
+    @Binding var scheduleData: [[Any]]
+    @Binding var currentWeekStart: Date
     
     @State private var isShowingReceiveModal = false
     @State private var isShowingAlert = false
     @State private var peerToSendAlert: MCPeerID?
+    @State private var showSuccessView = false
     
     @ObservedObject var connectivityManager: MultipeerConnectivityManager
     
+    @Binding var currentMonth: Int
+    @Binding var currentWeekOfMonth: Int
+    @Binding var selectedTimes: [SelectedTime]
+    
+    var dateManager: DateManager = DateManager()
+    var timeDotManager: TimeDotManager = TimeDotManager()
     
     var body: some View {
+        
         VStack{
-            TextField("Enter message", text: $messageToSend)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding()
             
-            
-            
+            Text(messageToSend)
+                .opacity(0)
+                .font(.caption2)
+                .onAppear {
+                    let text = "\(dateManager.currentMonth)- \(dateManager.currentWeekOfMonth)-\(currentWeekStart)" +
+                    timeDotManager.calcSelectedTime(dateManager: dateManager)
+                        .map { "/\(String(describing: $0.day))& \(dateManager.timeFormatter.string(from: $0.startTime))&\(dateManager.timeFormatter.string(from: $0.endTime))&\($0.duration)" }
+                        .joined(separator: " - ")
+                    messageToSend = text
+                }
         }
+        
+        
+        
         Button(action: {
+            
             if let peer = self.selectedPeer {
                 if connectivityManager.isConnected(peer: peer) {
                     connectivityManager.send(text: messageToSend, to: peer)
                     messageToSend = ""
+                    
+                    showSuccessView = true
                 } else {
                     print("Peer \(peer.displayName) is not connected")
                 }
             }
             
+            
         }) {
+            HStack{
+                Image("ShareSchedule")
+                Text("스케줄 공유하기")}
+            .padding()
+            .foregroundColor(AppColor.white)
+            .padding(.horizontal, 30)
+            .background(
+                RoundedRectangle(cornerRadius: 30)
+                    .fill(AppColor.black)
+            )
             
-            Text("스케줄 공유하기")
-                .font(.subheadline)
-                .frame(width: 300, height: 40)
-                .background(AppColor.black)
-                .foregroundColor(AppColor.white)
-                .cornerRadius(90)
-            
-            
-            
-            
-            
-            
-        }.onAppear {
+        }.fullScreenCover(isPresented: $showSuccessView) {
+            ShareSuccessView()
+        }
+        .onAppear {
             connectivityManager.startBrowsing()
             connectivityManager.receiveData { data, peerID in
                 self.peerToSendAlert = peerID
                 self.isShowingAlert = true
             }
+            
+            print("selectedTimes in ShareDetailView: \(selectedTimes)")
         }
         .halfSheet(isPresented: $isShowingReceiveModal) {
             if let receivedData = connectivityManager.receivedData, let peer = self.peerToSendAlert {
-                ReceivedDataView(receivedData: receivedData, peerDisplayName: peer.displayName, isPresented: $isShowingReceiveModal, receivedPeers: $receivedPeers)
+                ReceiveScheduleView(receivedData: receivedData, peerDisplayName: peer.displayName, isPresented: $isShowingReceiveModal, receivedPeers: $receivedPeers,scheduleData: $scheduleData)
             }
             
-        }.alert(isPresented: $isShowingAlert) {
+        }
+        .alert(isPresented: $isShowingAlert) {
             let peerToSendAlert = self.peerToSendAlert
             return Alert(
                 title: Text("스케줄 공유"),
@@ -128,66 +155,3 @@ extension View {
 }
 
 
-
-struct ReceivedDataView: View {
-    var receivedData: String
-    var peerDisplayName: String
-    @Binding var isPresented: Bool
-    @Binding var receivedPeers: [String]
-    
-    var body: some View {
-        VStack {
-            VStack(alignment:.leading){
-                
-                HStack{
-                    Spacer()
-                    
-                    Rectangle()
-                        .frame(width:50, height:5)
-                        .foregroundColor(AppColor.darkgray)
-                        .cornerRadius(15)
-                    Spacer()
-                }
-                Button(action: {
-                    isPresented = false
-                }) {
-                    Text("취소")
-                        .foregroundColor(AppColor.orange)
-                        .padding()
-                }
-                
-                
-            }
-            Text("공유된 스케줄")
-                .font(.title3)
-                .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-            
-            Divider()
-            
-            Text("\(peerDisplayName)에서 스케줄을 공유하려고 합니다")
-                .font(.caption)
-                .foregroundColor(AppColor.darkgray)
-                .padding(15)
-            
-            
-            Text(receivedData)
-                .padding()
-            
-            Spacer()
-            
-            Button(action: {
-                receivedPeers.append(peerDisplayName)
-                isPresented = false
-            }) {
-                Text("스케줄에 추가하기")
-                    .font(.subheadline)
-                    .frame(width: 300, height: 40)
-                    .background(AppColor.black)
-                    .foregroundColor(AppColor.white)
-                    .cornerRadius(90)
-            }
-            
-        }
-        .padding()
-    }
-}

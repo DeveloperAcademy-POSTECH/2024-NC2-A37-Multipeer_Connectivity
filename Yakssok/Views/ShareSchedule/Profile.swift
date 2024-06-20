@@ -12,10 +12,8 @@ struct Profile: View {
     @ObservedObject var connectivityManager: MultipeerConnectivityManager
     
     var body: some View {
-
         
         HStack{
-            
             Circle()
                 .frame(width: 90)
                 .foregroundColor(AppColor.white)
@@ -24,10 +22,10 @@ struct Profile: View {
                     Image("profile1")
                         .resizable()
                         .frame(width: 100, height: 100)
+                        .cornerRadius(90)
                 }
-                
+
             VStack (alignment:.leading){
-                
                 Text("다음과 같이 표시")
                     .font(.caption)
                     .foregroundColor(AppColor.darkgray)
@@ -36,27 +34,22 @@ struct Profile: View {
                     TextField("Enter your name", text: $displayName)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .frame(width: 150, height: 40)
-                        
- //                       .cornerRadius(30)
-//                        .overlay(
-//                                RoundedRectangle(cornerRadius: 30)
-//                                    .stroke(AppColor.darkgray, lineWidth: 1)
-//                            )
-                    
+           
                     Button(action: {
                         connectivityManager.updatePeerID(name: displayName)
                     }) {
                         Text("저장")
                             .padding()
                             .font(.subheadline)
-                            .frame(width: 100, height: 30)
+                            .frame(width: 60, height: 30)
                             .background(AppColor.black)
                             .foregroundColor(AppColor.white)
                             .cornerRadius(30)
                     }
                     
                 }.padding(.bottom)
-            }//.background(.blue)
+                    
+            }.padding(15)
             
             
         }

@@ -46,6 +46,7 @@ extension TimeDotManager {
                     startTime = nil
                     endTime = nil
                 }
+
             }
         }
         
