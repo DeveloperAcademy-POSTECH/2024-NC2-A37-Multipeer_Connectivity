@@ -29,6 +29,7 @@
 		675EE8EC2C23CA20000F4B58 /* Week.swift in Sources */ = {isa = PBXBuildFile; fileRef = 675EE8EB2C23CA20000F4B58 /* Week.swift */; };
 		675EE8EE2C23CA55000F4B58 /* ScheduleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 675EE8ED2C23CA55000F4B58 /* ScheduleData.swift */; };
 		675EE8F02C23CA89000F4B58 /* FinalSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 675EE8EF2C23CA89000F4B58 /* FinalSchedule.swift */; };
+		675EE8F22C23E1B6000F4B58 /* SuccessCompleteScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 675EE8F12C23E1B6000F4B58 /* SuccessCompleteScheduleView.swift */; };
 		67EB9E7A2C1C86A200AA6A1A /* YakssokApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67EB9E792C1C86A200AA6A1A /* YakssokApp.swift */; };
 		67EB9E7C2C1C86A200AA6A1A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67EB9E7B2C1C86A200AA6A1A /* ContentView.swift */; };
 		67EB9E7E2C1C86A300AA6A1A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 67EB9E7D2C1C86A300AA6A1A /* Assets.xcassets */; };
@@ -61,6 +62,7 @@
 		675EE8EB2C23CA20000F4B58 /* Week.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Week.swift; sourceTree = "<group>"; };
 		675EE8ED2C23CA55000F4B58 /* ScheduleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleData.swift; sourceTree = "<group>"; };
 		675EE8EF2C23CA89000F4B58 /* FinalSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinalSchedule.swift; sourceTree = "<group>"; };
+		675EE8F12C23E1B6000F4B58 /* SuccessCompleteScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessCompleteScheduleView.swift; sourceTree = "<group>"; };
 		67EB9E762C1C86A200AA6A1A /* Yakssok.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yakssok.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67EB9E792C1C86A200AA6A1A /* YakssokApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YakssokApp.swift; sourceTree = "<group>"; };
 		67EB9E7B2C1C86A200AA6A1A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 			children = (
 				675EE8DE2C22EBF3000F4B58 /* CompleteScheduleView.swift */,
 				675EE8E42C23509B000F4B58 /* CompleteScheduleSheetView.swift */,
+				675EE8F12C23E1B6000F4B58 /* SuccessCompleteScheduleView.swift */,
 			);
 			path = CompleteSchedule;
 			sourceTree = "<group>";
@@ -282,6 +285,7 @@
 				67412A4B2C1DDE75005F8883 /* MainView.swift in Sources */,
 				67EB9E7C2C1C86A200AA6A1A /* ContentView.swift in Sources */,
 				46FAB39A2C2003C500F339DD /* MultipeerConnectivityManager.swift in Sources */,
+				675EE8F22C23E1B6000F4B58 /* SuccessCompleteScheduleView.swift in Sources */,
 				461921052C204D4000B848B8 /* Profile.swift in Sources */,
 				675EE8E52C23509B000F4B58 /* CompleteScheduleSheetView.swift in Sources */,
 				675EE8E32C22FBC4000F4B58 /* CompleteScheduleTimeBlock.swift in Sources */,

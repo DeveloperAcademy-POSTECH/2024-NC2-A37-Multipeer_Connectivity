@@ -36,6 +36,7 @@ struct CompleteScheduleView: View {
     }
 }
 
+// 더미 데이터
 let tempData: [ScheduleData] = [
     .init(name: "Sadie", selectedWeekStart: Calendar.current.date(byAdding: .day, value: -3, to: .now)!, selectedTimes: [
         .init(day: 21, startTime: Calendar.current.date(byAdding: .hour, value: 3, to: Calendar.current.date(byAdding: .day, value: 1, to: .now)!)!, endTime: Calendar.current.date(byAdding: .hour, value: 6, to: Calendar.current.date(byAdding: .day, value: 1, to: .now)!)!),
