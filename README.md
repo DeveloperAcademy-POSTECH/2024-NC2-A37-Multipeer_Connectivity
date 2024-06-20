@@ -1,8 +1,8 @@
 # 2024-NC2-A37-Multipeer_Connectivity
 ## 🎥 Youtube Link
 (추후 만들어진 유튜브 링크 추가)
-## 💡 About Augmented Reality
 
+## 💡 About Multipeer Connectivity
 
 **Multipeer Connectivity** 프레임워크는 근처 기기에서 제공되는 서비스를 발견하고,
 
