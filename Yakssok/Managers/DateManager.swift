@@ -20,6 +20,7 @@ class DateManager {
     var currentWeekStart: Date {
         calendar.date(byAdding: .hour, value: 9, to: weeks[currentWeekIndex].weekStart)!
     }
+    
     var currentWeekOfMonth: Int {
         weeks[currentWeekIndex].weekOfMonth
     }
