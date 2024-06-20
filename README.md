@@ -19,11 +19,11 @@
 Multipeer Connectivity 프레임 워크를 활용하여 데이터를 쉽게 전송하고, MCNearbyServiceAdvertiser와 MCNearbyServiceBrowser를 활용하여 사용자들이 주변의 다른 사용자를 찾고 연결할 수 있도록 합니다. <br/> 
 
 ## 💼 Use Case
-> **예시** <br/> 내 친구의 닉네임을 친구의 머리 위에 3D로 띄우고, 인터렉션하여 탭 할 때 움직이게 할 수 있다.
+> **예시** 내 스케줄을 주변 친구의 앱에 띄우고, 약속이 가능한 시간을 앱 내에서 확인할 수 있다.<br/> 
 
-| 스케줄 작성 | 스케줄 공유 | 스케줄 종합 | 스케줄 확정 | 
-|--|--|--|--|
-|<img src="https://github.com/DeveloperAcademy-POSTECH/2024-NC2-A37-Multipeer_Connectivity/assets/88663477/498427fb-eff7-4729-bb32-3eb614bcdcd9" width=200> |<img src="https://github.com/DeveloperAcademy-POSTECH/2024-NC2-A37-Multipeer_Connectivity/assets/88663477/ff782ee1-52c7-45e5-9b11-8c8b7c86275c" width=200> |<img src="https://github.com/DeveloperAcademy-POSTECH/2024-NC2-A37-Multipeer_Connectivity/assets/88663477/2f663010-6b44-4d62-b724-cba98d874ec6" width=200> |<img src="https://github.com/DeveloperAcademy-POSTECH/2024-NC2-A37-Multipeer_Connectivity/assets/88663477/6ef77423-1f94-407e-afeb-69ba5b757613" width=200> |
+| 스케줄 작성 | 스케줄 공유 | 공유 알림 | 스케줄 종합 | 스케줄 확정 | 
+|--|--|--|--|--|
+|<img src="https://github.com/DeveloperAcademy-POSTECH/2024-NC2-A37-Multipeer_Connectivity/assets/88663477/498427fb-eff7-4729-bb32-3eb614bcdcd9" width=200> |<img src="https://github.com/DeveloperAcademy-POSTECH/2024-NC2-A37-Multipeer_Connectivity/assets/88663477/ff782ee1-52c7-45e5-9b11-8c8b7c86275c" width=200> |<img src="https://github.com/DeveloperAcademy-POSTECH/2024-NC2-A37-Multipeer_Connectivity/assets/88663477/9a499712-e233-493e-a0ae-c887322ea8d6" width=200>|<img src="https://github.com/DeveloperAcademy-POSTECH/2024-NC2-A37-Multipeer_Connectivity/assets/88663477/2f663010-6b44-4d62-b724-cba98d874ec6" width=200> |<img src="https://github.com/DeveloperAcademy-POSTECH/2024-NC2-A37-Multipeer_Connectivity/assets/88663477/6ef77423-1f94-407e-afeb-69ba5b757613" width=200> |
 
 ## 🖼️ Prototype
 (프로토타입과 설명 추가)
