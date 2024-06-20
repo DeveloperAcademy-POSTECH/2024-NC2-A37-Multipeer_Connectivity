@@ -49,6 +49,7 @@ private func TimeBlockTable(timeDotManager: TimeDotManager, dateManager: DateMan
         .onAppear {
             timeDotManager.prepareFeedback()
         }
+        .shadow(radius: 2, x: 1, y: 1)
         ClearButtonRow {
             timeDotManager.clearDots()
         }
@@ -126,52 +127,6 @@ private func ClearButtonRow(clear: @escaping () -> Void) -> some View {
     }
     .padding(.horizontal, 48)
     .padding(.bottom, 8)
-}
-
-enum TimeDotStyle {
-    case none
-    case start
-    case mid
-    case end
-    case unavailableStart
-    case unavailableMid
-    case unavailableEnd
-    
-    @ViewBuilder
-    var style: some View {
-        switch self {
-        case .none:
-            EmptyView()
-        case .start:
-            VStack {
-                Spacer().frame(height: TimeDotManager.spacing)
-                UnevenRoundedRectangle(cornerRadii: RectangleCornerRadii(topLeading: 10, topTrailing: 10))
-                    .foregroundStyle(AppColor.mint)
-            }
-        case .mid:
-            Rectangle()
-                .foregroundStyle(AppColor.mint)
-        case .end:
-            VStack {
-                UnevenRoundedRectangle(cornerRadii: RectangleCornerRadii(bottomLeading: 10, bottomTrailing: 10))
-                    .foregroundStyle(AppColor.mint)
-                Spacer().frame(height: TimeDotManager.spacing)
-            }
-        case .unavailableStart:
-            VStack {
-                UnevenRoundedRectangle(cornerRadii: RectangleCornerRadii(topLeading: 10, topTrailing: 10))
-                    .foregroundStyle(.gray.opacity(0.2))
-            }
-        case .unavailableMid:
-            Rectangle()
-                .foregroundStyle(.gray.opacity(0.2))
-        case .unavailableEnd:
-            VStack {
-                UnevenRoundedRectangle(cornerRadii: RectangleCornerRadii(bottomLeading: 10, bottomTrailing: 10))
-                    .foregroundStyle(.gray.opacity(0.2))
-            }
-        }
-    }
 }
 
 struct TimeBlock_Previews: PreviewProvider {
