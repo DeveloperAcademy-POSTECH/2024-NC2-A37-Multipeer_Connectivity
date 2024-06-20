@@ -20,6 +20,15 @@
 		67412A4B2C1DDE75005F8883 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67412A4A2C1DDE75005F8883 /* MainView.swift */; };
 		675EE8DA2C21B3CE000F4B58 /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 675EE8D92C21B3CE000F4B58 /* DateManager.swift */; };
 		675EE8DC2C2296D1000F4B58 /* TimeDotManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 675EE8DB2C2296D1000F4B58 /* TimeDotManager.swift */; };
+		675EE8DF2C22EBF3000F4B58 /* CompleteScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 675EE8DE2C22EBF3000F4B58 /* CompleteScheduleView.swift */; };
+		675EE8E12C22F234000F4B58 /* CheckBoxToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 675EE8E02C22F234000F4B58 /* CheckBoxToggleStyle.swift */; };
+		675EE8E32C22FBC4000F4B58 /* CompleteScheduleTimeBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 675EE8E22C22FBC4000F4B58 /* CompleteScheduleTimeBlock.swift */; };
+		675EE8E52C23509B000F4B58 /* CompleteScheduleSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 675EE8E42C23509B000F4B58 /* CompleteScheduleSheetView.swift */; };
+		675EE8E82C23C94F000F4B58 /* SelectedTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 675EE8E72C23C94F000F4B58 /* SelectedTime.swift */; };
+		675EE8EA2C23C9E7000F4B58 /* TimeDotStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 675EE8E92C23C9E7000F4B58 /* TimeDotStyle.swift */; };
+		675EE8EC2C23CA20000F4B58 /* Week.swift in Sources */ = {isa = PBXBuildFile; fileRef = 675EE8EB2C23CA20000F4B58 /* Week.swift */; };
+		675EE8EE2C23CA55000F4B58 /* ScheduleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 675EE8ED2C23CA55000F4B58 /* ScheduleData.swift */; };
+		675EE8F02C23CA89000F4B58 /* FinalSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 675EE8EF2C23CA89000F4B58 /* FinalSchedule.swift */; };
 		67EB9E7A2C1C86A200AA6A1A /* YakssokApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67EB9E792C1C86A200AA6A1A /* YakssokApp.swift */; };
 		67EB9E7C2C1C86A200AA6A1A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67EB9E7B2C1C86A200AA6A1A /* ContentView.swift */; };
 		67EB9E7E2C1C86A300AA6A1A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 67EB9E7D2C1C86A300AA6A1A /* Assets.xcassets */; };
@@ -43,6 +52,15 @@
 		67412A4A2C1DDE75005F8883 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		675EE8D92C21B3CE000F4B58 /* DateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
 		675EE8DB2C2296D1000F4B58 /* TimeDotManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDotManager.swift; sourceTree = "<group>"; };
+		675EE8DE2C22EBF3000F4B58 /* CompleteScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteScheduleView.swift; sourceTree = "<group>"; };
+		675EE8E02C22F234000F4B58 /* CheckBoxToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxToggleStyle.swift; sourceTree = "<group>"; };
+		675EE8E22C22FBC4000F4B58 /* CompleteScheduleTimeBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteScheduleTimeBlock.swift; sourceTree = "<group>"; };
+		675EE8E42C23509B000F4B58 /* CompleteScheduleSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteScheduleSheetView.swift; sourceTree = "<group>"; };
+		675EE8E72C23C94F000F4B58 /* SelectedTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedTime.swift; sourceTree = "<group>"; };
+		675EE8E92C23C9E7000F4B58 /* TimeDotStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDotStyle.swift; sourceTree = "<group>"; };
+		675EE8EB2C23CA20000F4B58 /* Week.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Week.swift; sourceTree = "<group>"; };
+		675EE8ED2C23CA55000F4B58 /* ScheduleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleData.swift; sourceTree = "<group>"; };
+		675EE8EF2C23CA89000F4B58 /* FinalSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinalSchedule.swift; sourceTree = "<group>"; };
 		67EB9E762C1C86A200AA6A1A /* Yakssok.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yakssok.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67EB9E792C1C86A200AA6A1A /* YakssokApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YakssokApp.swift; sourceTree = "<group>"; };
 		67EB9E7B2C1C86A200AA6A1A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -86,6 +104,26 @@
 			path = MultipeerConnectivity;
 			sourceTree = "<group>";
 		};
+		675EE8DD2C22EBDE000F4B58 /* CompleteSchedule */ = {
+			isa = PBXGroup;
+			children = (
+				675EE8DE2C22EBF3000F4B58 /* CompleteScheduleView.swift */,
+				675EE8E42C23509B000F4B58 /* CompleteScheduleSheetView.swift */,
+			);
+			path = CompleteSchedule;
+			sourceTree = "<group>";
+		};
+		675EE8E62C23C753000F4B58 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				675EE8E72C23C94F000F4B58 /* SelectedTime.swift */,
+				675EE8EB2C23CA20000F4B58 /* Week.swift */,
+				675EE8ED2C23CA55000F4B58 /* ScheduleData.swift */,
+				675EE8EF2C23CA89000F4B58 /* FinalSchedule.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		67EB9E6D2C1C86A100AA6A1A = {
 			isa = PBXGroup;
 			children = (
@@ -105,6 +143,7 @@
 		67EB9E782C1C86A200AA6A1A /* Yakssok */ = {
 			isa = PBXGroup;
 			children = (
+				675EE8E62C23C753000F4B58 /* Models */,
 				46FAB39D2C20045300F339DD /* Info.plist */,
 				46FAB3982C20038500F339DD /* MultipeerConnectivity */,
 				67EB9E892C1C8D4400AA6A1A /* Managers */,
@@ -129,6 +168,7 @@
 		67EB9E872C1C8D2E00AA6A1A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				675EE8DD2C22EBDE000F4B58 /* CompleteSchedule */,
 				461921142C21E17900B848B8 /* ShareSchedule */,
 				67412A4A2C1DDE75005F8883 /* MainView.swift */,
 			);
@@ -140,7 +180,10 @@
 			children = (
 				67EB9E8D2C1C925500AA6A1A /* TimeBlock.swift */,
 				67412A482C1DC3F4005F8883 /* WeeklyCalendar.swift */,
+				675EE8E02C22F234000F4B58 /* CheckBoxToggleStyle.swift */,
+				675EE8E22C22FBC4000F4B58 /* CompleteScheduleTimeBlock.swift */,
 				67EB9E8A2C1C8D8800AA6A1A /* Extensions */,
+				675EE8E92C23C9E7000F4B58 /* TimeDotStyle.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -234,20 +277,29 @@
 			buildActionMask = 2147483647;
 			files = (
 				675EE8DC2C2296D1000F4B58 /* TimeDotManager.swift in Sources */,
+				675EE8F02C23CA89000F4B58 /* FinalSchedule.swift in Sources */,
 				67EB9E8E2C1C925500AA6A1A /* TimeBlock.swift in Sources */,
 				67412A4B2C1DDE75005F8883 /* MainView.swift in Sources */,
 				67EB9E7C2C1C86A200AA6A1A /* ContentView.swift in Sources */,
 				46FAB39A2C2003C500F339DD /* MultipeerConnectivityManager.swift in Sources */,
 				461921052C204D4000B848B8 /* Profile.swift in Sources */,
+				675EE8E52C23509B000F4B58 /* CompleteScheduleSheetView.swift in Sources */,
+				675EE8E32C22FBC4000F4B58 /* CompleteScheduleTimeBlock.swift in Sources */,
 				461921012C20150A00B848B8 /* ShareScheduleView.swift in Sources */,
 				675EE8DA2C21B3CE000F4B58 /* DateManager.swift in Sources */,
+				675EE8DF2C22EBF3000F4B58 /* CompleteScheduleView.swift in Sources */,
 				67EB9E8C2C1C8FFE00AA6A1A /* Color+Extension.swift in Sources */,
 				46FAB39C2C2003E400F339DD /* MultipeerView.swift in Sources */,
+				675EE8EE2C23CA55000F4B58 /* ScheduleData.swift in Sources */,
+				675EE8E12C22F234000F4B58 /* CheckBoxToggleStyle.swift in Sources */,
 				461921072C2145B600B848B8 /* PeerListView.swift in Sources */,
 				461921162C21E1D200B848B8 /* ShareSuccessView.swift in Sources */,
 				67EB9E7A2C1C86A200AA6A1A /* YakssokApp.swift in Sources */,
+				675EE8EC2C23CA20000F4B58 /* Week.swift in Sources */,
+				675EE8EA2C23C9E7000F4B58 /* TimeDotStyle.swift in Sources */,
 				461921032C204D0A00B848B8 /* MyScheduleView.swift in Sources */,
 				461921112C21936300B848B8 /* ShareDetailView.swift in Sources */,
+				675EE8E82C23C94F000F4B58 /* SelectedTime.swift in Sources */,
 				461921132C21D30100B848B8 /* SharedPeer.swift in Sources */,
 				67412A492C1DC3F4005F8883 /* WeeklyCalendar.swift in Sources */,
 			);

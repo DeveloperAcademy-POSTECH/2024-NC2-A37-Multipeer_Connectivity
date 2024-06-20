@@ -52,6 +52,88 @@ extension TimeDotManager {
         return selectedTimes
     }
     
+    func applyScheduleData(_ scheduleData: [ScheduleData], forWeekStart weekStart: Date) {
+        var scheduleCount = Array(repeating: Array(repeating: 0, count: 7), count: 16)
+        
+        for data in scheduleData {
+            for selectedTime in data.selectedTimes {
+                let col = Calendar.current.dateComponents([.day], from: weekStart, to: selectedTime.startTime).day!
+                let startRow = Calendar.current.component(.hour, from: selectedTime.startTime) - 9
+                let endRow = Calendar.current.component(.hour, from: selectedTime.endTime) - 9
+                
+                if startRow >= 0 && endRow < dotStyles.count {
+                    if dotStyles[startRow][col] == .end || dotStyles[startRow][col] == .transparentEnd {
+                        dotStyles[startRow][col] = .transparentMid
+                    } else if dotStyles[startRow][col] != .transparentMid {
+                        dotStyles[startRow][col] = .transparentStart
+                    }
+                    scheduleCount[startRow][col] += 1
+                    
+                    if dotStyles[endRow][col] == .start || dotStyles[endRow][col] == .transparentStart {
+                        dotStyles[endRow][col] = .transparentMid
+                    } else if dotStyles[endRow][col] != .transparentMid {
+                        dotStyles[endRow][col] = .transparentEnd
+                    }
+                    scheduleCount[endRow][col] += 1
+                    
+                    for row in (startRow + 1)..<endRow {
+                        dotStyles[row][col] = .transparentMid
+                        scheduleCount[row][col] += 1
+                    }
+                }
+            }
+        }
+        
+        highlightOverlappingSchedules(scheduleCount, scheduleData: scheduleData)
+    }
+    
+    func highlightOverlappingSchedules(_ scheduleCount: [[Int]], scheduleData: [ScheduleData]) {
+        for col in 0..<7 {
+            var inOverlap = false
+            var temp: TimeDotStyle = .none
+            
+            for row in 0..<16 {
+                if scheduleCount[row][col] >= scheduleData.count {
+                    if !inOverlap {
+                        // Start of an overlapping block
+                        temp = dotStyles[row][col]
+                        if dotStyles[row - 1][col] == .none {
+                            dotStyles[row][col] = .overlapStartStart
+                        } else {
+                            dotStyles[row][col] = .overlapStart
+                        }
+                        inOverlap = true
+                    } else {
+                        // Middle of an overlapping block
+                        if dotStyles[row][col] == .transparentMid || dotStyles[row][col] == .transparentEnd {
+                            dotStyles[row][col] = .overlapMid
+                        }
+                    }
+                } else {
+                    if inOverlap {
+                        // End of an overlapping block
+                        if dotStyles[row - 1][col] == .overlapMid {
+                            if dotStyles[row][col] == .none{
+                                dotStyles[row - 1][col] = .overlapEndEnd
+                            } else {
+                                dotStyles[row - 1][col] = .overlapEnd
+                            }
+                        } else if dotStyles[row - 1][col] == .start {
+                            dotStyles[row - 1][col] = temp
+                        }
+                        inOverlap = false
+                    }
+                }
+            }
+            if inOverlap {
+                // If the last row was part of an overlapping block, mark it as the end
+                if dotStyles[15][col] == .mid {
+                    dotStyles[15][col] = .end
+                }
+            }
+        }
+    }
+    
     func isPastDay(col: Int, dateManager: DateManager) -> Bool {
         let currentDay = dateManager.calendar.date(byAdding: .day, value: col, to: dateManager.currentWeekStart)!
         let difference = dateManager.calendar.dateComponents([.day], from: .now, to: currentDay).day!
@@ -175,15 +257,5 @@ extension TimeDotManager {
     
     func prepareFeedback() {
         feedbackGenerator.prepare()
-    }
-}
-
-/// 주고 받을 스케줄 데이터 구조
-struct SelectedTime {
-    var day: Int
-    var startTime: Date
-    var endTime: Date
-    var duration: Int {
-        Calendar.current.dateComponents([.hour], from: startTime, to: endTime).hour!
     }
 }

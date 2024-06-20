@@ -29,9 +29,11 @@ struct WeeklyCalendar: View {
                             .frame(width: 14)
                             .foregroundStyle(.white)
                             .padding([.vertical, .trailing], 7.5)
+                            .shadow(radius: 1, x: 2, y: 2)
+                        
                         HStack {
                             ForEach(week.dates, id: \.self) { date in
-                                let day = dateManager.daySymbolsFormatter.string(from: date)
+                                let day = DateManager.daySymbolsFormatter.string(from: date)
                                 Text(day)
                                     .font(.system(size: 20))
                                     .frame(maxWidth: .infinity)
@@ -41,11 +43,14 @@ struct WeeklyCalendar: View {
                         .padding(.vertical, 8)
                         .background(.white)
                         .clipShape(RoundedRectangle(cornerRadius: 30))
-                        .padding(.horizontal)
+                        .padding(.horizontal, 10)
+                        .shadow(radius: 2, x: 1, y:1)
+                        
                         UnevenRoundedRectangle(cornerRadii: RectangleCornerRadii(topLeading: 30, bottomLeading: 30, bottomTrailing: 0, topTrailing: 0))
                             .frame(width: 14)
                             .foregroundStyle(.white)
                             .padding([.vertical, .leading], 7.5)
+                            .shadow(radius: 1, x: 2, y: 2)
                     }
                     .tag(index)
                 }

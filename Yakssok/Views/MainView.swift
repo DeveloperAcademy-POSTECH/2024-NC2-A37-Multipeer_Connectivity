@@ -57,7 +57,7 @@ private func ConfirmScheduleButton(dateManager: DateManager, timeDotManager: Tim
         print("\(dateManager.currentMonth)월 \(dateManager.currentWeekOfMonth)주차")
         let selectedTimes = timeDotManager.calcSelectedTime(dateManager: dateManager)
         for time in selectedTimes {
-            print("Date: \(time.day), Start: \(dateManager.timeFormatter.string(from: time.startTime)), End: \(dateManager.timeFormatter.string(from: time.endTime)), Duration: \(time.duration)")
+            print("Date: \(time.day), Start: \(DateManager.timeFormatter.string(from: time.startTime)), End: \(DateManager.timeFormatter.string(from: time.endTime)), Duration: \(time.duration)")
         }
     } label: {
         Label {

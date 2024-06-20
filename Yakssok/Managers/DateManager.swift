@@ -29,19 +29,19 @@ class DateManager {
         return Array(symbols[calendar.firstWeekday-1..<symbols.count] + symbols[0..<calendar.firstWeekday-1])
     }
     
-    
     let calendar = Calendar.current
-    let daySymbolsFormatter: DateFormatter = {
+    
+    static let daySymbolsFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "d"
         return formatter
     }()
-    let timeFormatter: DateFormatter = {
+    static let timeFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "a hh시 mm분"
         return formatter
     }()
-    let dateFormatter: DateFormatter = {
+    static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "M월 d일"
         return formatter
@@ -70,16 +70,5 @@ extension DateManager {
             let weekOfMonth = components.weekOfMonth!
             weeks.append(Week(weekStart: weekStart, dates: week, year: year, month: month, weekOfMonth: weekOfMonth))
         }
-    }
-}
-
-extension DateManager {
-    struct Week: Identifiable {
-        let id = UUID()
-        let weekStart: Date
-        let dates: [Date]
-        let year: Int
-        let month: Int
-        let weekOfMonth: Int
     }
 }
