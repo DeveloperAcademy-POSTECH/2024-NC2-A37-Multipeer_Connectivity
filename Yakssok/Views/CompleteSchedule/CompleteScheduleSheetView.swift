@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CompleteScheduleSheetView: View {
     @Binding var isPresented: Bool
-    @State private var schedule: SelectedTime = .init(day: 20, startTime: .now, endTime: Calendar.current.date(byAdding: .hour, value: 3, to: .now)!)
+    @Binding var selectedSchedule: SelectedTime
     
     var body: some View {
         VStack {
@@ -36,7 +36,7 @@ struct CompleteScheduleSheetView: View {
             Divider()
             
             HStack {
-                Text("\(schedule.day)")
+                Text("\(selectedSchedule.day)")
                     .font(.largeTitle)
                     .bold()
                     .foregroundStyle(AppColor.white)
@@ -48,13 +48,13 @@ struct CompleteScheduleSheetView: View {
                     .padding()
                 Spacer().frame(width: 20)
                 VStack {
-                    DatePicker(selection: $schedule.startTime, displayedComponents: .hourAndMinute) {
+                    DatePicker(selection: $selectedSchedule.startTime, displayedComponents: .hourAndMinute) {
                         Text("시작 시간")
                             .font(.subheadline)
                             .bold()
                     }
                     Divider()
-                    DatePicker(selection: $schedule.endTime, displayedComponents: .hourAndMinute) {
+                    DatePicker(selection: $selectedSchedule.endTime, displayedComponents: .hourAndMinute) {
                         Text("종료 시간")
                             .font(.subheadline)
                             .bold()
@@ -83,6 +83,6 @@ struct CompleteScheduleSheetView: View {
     }
 }
 
-#Preview {
-    CompleteScheduleSheetView(isPresented: .constant(true))
-}
+//#Preview {
+//    CompleteScheduleSheetView(isPresented: .constant(true))
+//}

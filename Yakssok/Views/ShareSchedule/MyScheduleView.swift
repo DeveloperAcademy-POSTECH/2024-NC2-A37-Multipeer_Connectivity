@@ -8,43 +8,44 @@
 import SwiftUI
 
 struct MyScheduleView: View {
-    @Binding var currentMonth: Int
-    @Binding var currentWeekOfMonth: Int
-    @Binding var selectedTimes: [SelectedTime]
-    
-    var dateManager: DateManager = DateManager()
-    var timeDotManager: TimeDotManager = TimeDotManager()
+    var dateManager: DateManager
+    var timeDotManager: TimeDotManager
     
     var body: some View {
         VStack(alignment: .leading){
             
             Text("나의 약속 가능 스케줄")
                 .font(.title3)
-                .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                .fontWeight(.bold)
             
-            VStack(alignment:.leading){
+            VStack(alignment:.leading) {
                 Text("\(dateManager.currentMonth)월 \(dateManager.currentWeekOfMonth)주차")
                     .font(.caption)
                     .foregroundColor(AppColor.darkgray)
-                
-                let selectedTimes = timeDotManager.calcSelectedTime(dateManager: dateManager)
                
-                ForEach(selectedTimes, id: \.day) { time in
+                ForEach(dateManager.selectedTimes, id: \.day) { time in
                     HStack(alignment: .center, spacing: 5) {
                         Text("\(time.day)")
                             .font(.title)
-                            .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                            .padding(.horizontal,5)
+                            .fontWeight(.bold)
+                            .padding(.horizontal, 5)
+                            .frame(width: 50)
                         
-                        Text("\(dateManager.timeFormatter.string(from: time.startTime).dropLast(3))")
-                            .font(.subheadline)
-                        
-                        Text("~ \(dateManager.timeFormatter.string(from: time.endTime).dropLast(3))")
-                            .font(.subheadline)
+                        HStack {
+                            Text(String(DateManager.timeFormatter.string(from: time.startTime).dropLast(3)))
+                                .font(.subheadline)
+                            
+                            Text("~ ")
+                                .font(.subheadline)
+                            
+                            Text(String(DateManager.timeFormatter.string(from: time.endTime).dropLast(3)))
+                                .font(.subheadline)
+                        }
+                        .frame(width: 166)
                         
                         Text("\(time.duration) 시간")
                             .font(.caption)
-                            .frame(width: 80, height: 16)
+                            .frame(width: 76, height: 16)
                             .background(AppColor.orange.opacity(0.2))
                             .cornerRadius(90)
                             .foregroundColor(AppColor.orange)
@@ -54,13 +55,14 @@ struct MyScheduleView: View {
                     .background(Color.gray.opacity(0.1))
                     .cornerRadius(10)
                 }
-                
-                
-            }.frame(width:330)
-                .padding(15)
-                .background(AppColor.white)
-                .cornerRadius(30)
-                
+            }
+            .frame(width:330)
+            .padding(20)
+            .background(AppColor.white)
+            .cornerRadius(30)
+            .onAppear {
+                dateManager.selectedTimes = timeDotManager.calcSelectedTime(dateManager: dateManager)
+            }
                 
         }
     }

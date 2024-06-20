@@ -9,6 +9,12 @@ import Foundation
 
 @Observable
 class DateManager {
+    var selectedTimes: [SelectedTime] = []
+    
+    var receivedScheduleData: [[String : Any]] = []
+    
+    var finalSchedule: [[SelectedTime]] = []
+    
     var weeks: [Week] = []
     
     var currentWeekIndex: Int = 0
@@ -45,6 +51,11 @@ class DateManager {
     static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "M월 d일"
+        return formatter
+    }()
+    static let detailDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "y년 M월 d일"
         return formatter
     }()
     
