@@ -27,7 +27,7 @@
 |--|--|--|--|--|
 |<img src="https://github.com/DeveloperAcademy-POSTECH/2024-NC2-A37-Multipeer_Connectivity/assets/88663477/498427fb-eff7-4729-bb32-3eb614bcdcd9" width=200> |<img src="https://github.com/DeveloperAcademy-POSTECH/2024-NC2-A37-Multipeer_Connectivity/assets/88663477/ff782ee1-52c7-45e5-9b11-8c8b7c86275c" width=200> |<img src="https://github.com/DeveloperAcademy-POSTECH/2024-NC2-A37-Multipeer_Connectivity/assets/88663477/9a499712-e233-493e-a0ae-c887322ea8d6" width=200>|<img src="https://github.com/DeveloperAcademy-POSTECH/2024-NC2-A37-Multipeer_Connectivity/assets/88663477/2f663010-6b44-4d62-b724-cba98d874ec6" width=200> |<img src="https://github.com/DeveloperAcademy-POSTECH/2024-NC2-A37-Multipeer_Connectivity/assets/88663477/6ef77423-1f94-407e-afeb-69ba5b757613" width=200> |
 
-## 🙋🏻‍♂️UserFlow
+## 🙋🏻‍♂️UserFlow
 1. 나의 스케줄을 입력하는 ***스케줄 작성***
 2. 나의 스케줄을 공유하는 ***스케줄 공유***
 3. 친구들의 스케줄을 한눈에 모아보는 ***스케줄 종합***
