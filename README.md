@@ -18,7 +18,7 @@ _(내용 중략) <br/>
 
 (내용 중략)_
 ## 🎯 What we focus on?
-> **예시** <br/> 
+> 
 Multipeer Connectivity 프레임 워크를 활용하여 데이터를 쉽게 전송하고,
 MCSession을 이용하여 연결된 피어 간에 스케줄 데이터를 안전하게 전송하고, MCNearbyServiceAdvertiser와 MCNearbyServiceBrowser를 활용하여 사용자들이 주변의 다른 사용자를 찾고 연결할 수 있도록 합니다.
 
