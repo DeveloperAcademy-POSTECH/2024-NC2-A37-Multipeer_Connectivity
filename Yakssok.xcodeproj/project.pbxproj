@@ -14,6 +14,7 @@
 		461921112C21936300B848B8 /* ShareDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461921102C21936300B848B8 /* ShareDetailView.swift */; };
 		461921132C21D30100B848B8 /* SharedPeer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461921122C21D30100B848B8 /* SharedPeer.swift */; };
 		461921162C21E1D200B848B8 /* ShareSuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461921152C21E1D200B848B8 /* ShareSuccessView.swift */; };
+		4619211C2C23F84100B848B8 /* ReceiveScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4619211B2C23F84100B848B8 /* ReceiveScheduleView.swift */; };
 		46FAB39A2C2003C500F339DD /* MultipeerConnectivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FAB3992C2003C500F339DD /* MultipeerConnectivityManager.swift */; };
 		46FAB39C2C2003E400F339DD /* MultipeerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FAB39B2C2003E400F339DD /* MultipeerView.swift */; };
 		67412A492C1DC3F4005F8883 /* WeeklyCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67412A482C1DC3F4005F8883 /* WeeklyCalendar.swift */; };
@@ -36,6 +37,7 @@
 		461921102C21936300B848B8 /* ShareDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareDetailView.swift; sourceTree = "<group>"; };
 		461921122C21D30100B848B8 /* SharedPeer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedPeer.swift; sourceTree = "<group>"; };
 		461921152C21E1D200B848B8 /* ShareSuccessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSuccessView.swift; sourceTree = "<group>"; };
+		4619211B2C23F84100B848B8 /* ReceiveScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiveScheduleView.swift; sourceTree = "<group>"; };
 		46FAB3992C2003C500F339DD /* MultipeerConnectivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipeerConnectivityManager.swift; sourceTree = "<group>"; };
 		46FAB39B2C2003E400F339DD /* MultipeerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipeerView.swift; sourceTree = "<group>"; };
 		46FAB39D2C20045300F339DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 				461921022C204D0A00B848B8 /* MyScheduleView.swift */,
 				461921042C204D4000B848B8 /* Profile.swift */,
 				461921102C21936300B848B8 /* ShareDetailView.swift */,
+				4619211B2C23F84100B848B8 /* ReceiveScheduleView.swift */,
 				461921062C2145B600B848B8 /* PeerListView.swift */,
 				461921122C21D30100B848B8 /* SharedPeer.swift */,
 				461921152C21E1D200B848B8 /* ShareSuccessView.swift */,
@@ -80,7 +83,6 @@
 		46FAB3982C20038500F339DD /* MultipeerConnectivity */ = {
 			isa = PBXGroup;
 			children = (
-				46FAB3992C2003C500F339DD /* MultipeerConnectivityManager.swift */,
 				46FAB39B2C2003E400F339DD /* MultipeerView.swift */,
 			);
 			path = MultipeerConnectivity;
@@ -148,6 +150,7 @@
 		67EB9E892C1C8D4400AA6A1A /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				46FAB3992C2003C500F339DD /* MultipeerConnectivityManager.swift */,
 				675EE8D92C21B3CE000F4B58 /* DateManager.swift */,
 				675EE8DB2C2296D1000F4B58 /* TimeDotManager.swift */,
 			);
@@ -240,6 +243,7 @@
 				46FAB39A2C2003C500F339DD /* MultipeerConnectivityManager.swift in Sources */,
 				461921052C204D4000B848B8 /* Profile.swift in Sources */,
 				461921012C20150A00B848B8 /* ShareScheduleView.swift in Sources */,
+				4619211C2C23F84100B848B8 /* ReceiveScheduleView.swift in Sources */,
 				675EE8DA2C21B3CE000F4B58 /* DateManager.swift in Sources */,
 				67EB9E8C2C1C8FFE00AA6A1A /* Color+Extension.swift in Sources */,
 				46FAB39C2C2003E400F339DD /* MultipeerView.swift in Sources */,
@@ -387,6 +391,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Yakssok/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "We need access to local network for connecting to nearby devices.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -418,6 +423,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Yakssok/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "We need access to local network for connecting to nearby devices.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

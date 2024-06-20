@@ -31,26 +31,9 @@ struct MultipeerView: View {
                         Profile(displayName: $displayName, connectivityManager: connectivityManager)
                             .padding(.bottom,30)
                         
-                        MyScheduleView()
-                            .padding(.bottom,30)
-                        /*
-                         TextField("Enter your name", text: $displayName)
-                         .textFieldStyle(RoundedBorderTextFieldStyle())
-                         .padding()
-                         
-                         Button(action: {
-                         connectivityManager.updatePeerID(name: displayName)
-                         }) {
-                         Text("Save")
-                         .padding()
-                         .background(Color.blue)
-                         .foregroundColor(.white)
-                         .cornerRadius(8)
-                         }
-                         .padding(.bottom)
-                         
-                         */
-                        
+//                        MyScheduleView()
+//                            .padding(.bottom,30)
+//                        
                         
                         
                         

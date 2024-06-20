@@ -46,6 +46,7 @@ extension TimeDotManager {
                     startTime = nil
                     endTime = nil
                 }
+
             }
         }
         
@@ -179,7 +180,8 @@ extension TimeDotManager {
 }
 
 /// 주고 받을 스케줄 데이터 구조
-struct SelectedTime {
+struct SelectedTime :  Codable, Identifiable {
+    var id = UUID() 
     var day: Int
     var startTime: Date
     var endTime: Date
@@ -187,3 +189,5 @@ struct SelectedTime {
         Calendar.current.dateComponents([.hour], from: startTime, to: endTime).hour!
     }
 }
+
+

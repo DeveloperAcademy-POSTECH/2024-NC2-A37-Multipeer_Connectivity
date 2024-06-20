@@ -1,13 +1,13 @@
 //
-//  MyScheduleView.swift
+//  Test.swift
 //  Yakssok
 //
-//  Created by 추서연 on 6/17/24.
+//  Created by 추서연 on 6/20/24.
 //
 
 import SwiftUI
 
-struct MyScheduleView: View {
+struct Test: View {
     @Binding var currentMonth: Int
     @Binding var currentWeekOfMonth: Int
     @Binding var selectedTimes: [SelectedTime]
@@ -28,7 +28,7 @@ struct MyScheduleView: View {
                     .foregroundColor(AppColor.darkgray)
                 
                 let selectedTimes = timeDotManager.calcSelectedTime(dateManager: dateManager)
-               
+                
                 ForEach(selectedTimes, id: \.day) { time in
                     HStack(alignment: .center, spacing: 5) {
                         Text("\(time.day)")
@@ -60,8 +60,6 @@ struct MyScheduleView: View {
                 .padding(15)
                 .background(AppColor.white)
                 .cornerRadius(30)
-                
-                
         }
     }
    
