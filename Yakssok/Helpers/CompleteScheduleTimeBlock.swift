@@ -14,6 +14,7 @@ struct CompleteScheduleTimeBlock: View {
     var dateManager: DateManager
     
     @State private var showSheet: Bool = false
+//    @State private var finalSchedule: SelectedTime
     
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -22,12 +23,23 @@ struct CompleteScheduleTimeBlock: View {
         }
         .padding(.horizontal)
         .onAppear {
-            timeDotManager.applyScheduleData(tempData, forWeekStart: tempData[0].selectedWeekStart)
+            print(">========= Received Schedule Data =========<")
+            print(dateManager.receivedScheduleData.debugDescription)
+            
+            let scheduleData = dateManager.receivedScheduleData.compactMap { $0["selectedTimes"] as? [SelectedTime] }
+            
+            // 여기서 대입해도 되는 건가??? append해야할 거 같은데....
+            dateManager.finalSchedule = scheduleData
+            print(">========= Schedule Data =========<")
+            print(scheduleData.debugDescription)
+            
+            timeDotManager.applyScheduleData(scheduleData, forWeekStart: dateManager.receivedScheduleData.compactMap { $0["weekStart"] as? Date }.first!)
         }
-        .sheet(isPresented: $showSheet) {
-            CompleteScheduleSheetView(isPresented: $showSheet)
-                .presentationDetents([.medium])
-        }
+        // TODO: - 겹치는 시간대 구조 구현 필요 => applyScheduleData() 내의 scheduleCount 사용하면 될 듯
+//        .sheet(isPresented: $showSheet) {
+//            CompleteScheduleSheetView(isPresented: $showSheet, selectedSchedule: $finalSchedule)
+//                .presentationDetents([.medium])
+//        }
     }
 }
 
@@ -104,8 +116,8 @@ private var TimeDetailHeader: some View {
     .foregroundStyle(.gray)
 }
 
-struct CompleteScheduleTimeBlock_Previews: PreviewProvider {
-    static var previews: some View {
-        CompleteScheduleTimeBlock(timeDotManager: TimeDotManager(), dateManager: DateManager())
-    }
-}
+//struct CompleteScheduleTimeBlock_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CompleteScheduleTimeBlock(timeDotManager: TimeDotManager(), dateManager: DateManager())
+//    }
+//}

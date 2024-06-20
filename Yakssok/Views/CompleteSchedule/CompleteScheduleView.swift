@@ -23,13 +23,13 @@ struct CompleteScheduleView: View {
                 
                 Divider()
                 
-                UserFilterButtonRow()
+//                UserFilterButtonRow()
                 
                 Spacer().frame(height: 12)
                 
-                WeekRow()
+                WeekRow(dateManager: dateManager)
                 
-                CompleteScheduleTimeBlock(timeDotManager: TimeDotManager(), dateManager: DateManager())
+                CompleteScheduleTimeBlock(timeDotManager: timeDotManager, dateManager: dateManager)
             }
         }
         .ignoresSafeArea()
@@ -37,16 +37,16 @@ struct CompleteScheduleView: View {
 }
 
 // 더미 데이터
-let tempData: [ScheduleData] = [
-    .init(name: "Sadie", selectedWeekStart: Calendar.current.date(byAdding: .day, value: -3, to: .now)!, selectedTimes: [
-        .init(day: 21, startTime: Calendar.current.date(byAdding: .hour, value: 3, to: Calendar.current.date(byAdding: .day, value: 1, to: .now)!)!, endTime: Calendar.current.date(byAdding: .hour, value: 6, to: Calendar.current.date(byAdding: .day, value: 1, to: .now)!)!),
-        .init(day: 22, startTime: Calendar.current.date(byAdding: .hour, value: 5, to: Calendar.current.date(byAdding: .day, value: 2, to: .now)!)!, endTime: Calendar.current.date(byAdding: .hour, value: 7, to: Calendar.current.date(byAdding: .day, value: 2, to: .now)!)!)
-    ]),
-    .init(name: "Chan", selectedWeekStart: Calendar.current.date(byAdding: .day, value: -3, to: .now)!, selectedTimes: [
-        .init(day: 22, startTime: Calendar.current.date(byAdding: .hour, value: 3, to: Calendar.current.date(byAdding: .day, value: 2, to: .now)!)!, endTime: Calendar.current.date(byAdding: .hour, value: 6, to: Calendar.current.date(byAdding: .day, value: 2, to: .now)!)!),
-        .init(day: 23, startTime: Calendar.current.date(byAdding: .hour, value: 2, to: Calendar.current.date(byAdding: .day, value: 3, to: .now)!)!, endTime: Calendar.current.date(byAdding: .hour, value: 7, to: Calendar.current.date(byAdding: .day, value: 3, to: .now)!)!)
-    ])
-]
+//let tempData: [ScheduleData] = [
+//    .init(name: "Sadie", selectedWeekStart: Calendar.current.date(byAdding: .day, value: -3, to: .now)!, selectedTimes: [
+//        .init(day: 21, startTime: Calendar.current.date(byAdding: .hour, value: 3, to: Calendar.current.date(byAdding: .day, value: 1, to: .now)!)!, endTime: Calendar.current.date(byAdding: .hour, value: 6, to: Calendar.current.date(byAdding: .day, value: 1, to: .now)!)!),
+//        .init(day: 22, startTime: Calendar.current.date(byAdding: .hour, value: 5, to: Calendar.current.date(byAdding: .day, value: 2, to: .now)!)!, endTime: Calendar.current.date(byAdding: .hour, value: 7, to: Calendar.current.date(byAdding: .day, value: 2, to: .now)!)!)
+//    ]),
+//    .init(name: "Chan", selectedWeekStart: Calendar.current.date(byAdding: .day, value: -3, to: .now)!, selectedTimes: [
+//        .init(day: 22, startTime: Calendar.current.date(byAdding: .hour, value: 3, to: Calendar.current.date(byAdding: .day, value: 2, to: .now)!)!, endTime: Calendar.current.date(byAdding: .hour, value: 6, to: Calendar.current.date(byAdding: .day, value: 2, to: .now)!)!),
+//        .init(day: 23, startTime: Calendar.current.date(byAdding: .hour, value: 2, to: Calendar.current.date(byAdding: .day, value: 3, to: .now)!)!, endTime: Calendar.current.date(byAdding: .hour, value: 7, to: Calendar.current.date(byAdding: .day, value: 3, to: .now)!)!)
+//    ])
+//]
 
 @ViewBuilder
 private func CompleteScheduleViewTitle() -> some View {
@@ -71,17 +71,19 @@ private func SelectAllButtonRow() -> some View {
     .padding(.horizontal)
 }
 
-@ViewBuilder
-private func UserFilterButtonRow() -> some View {
-    ScrollView(.horizontal) {
-        HStack(spacing: 0) {
-            ForEach(tempData, id: \.self) { data in
-                UserFilterButton(data.name)
-            }
-        }
-    }
-    .padding(.horizontal)
-}
+//@ViewBuilder
+//private func UserFilterButtonRow(dateManager: DateManager) -> some View {
+//    ScrollView(.horizontal) {
+//        HStack(spacing: 0) {
+//            ForEach(dateManager.receivedScheduleData.map({ item in
+//                
+//            }), id: \.self) { data in
+//                UserFilterButton(data.name)
+//            }
+//        }
+//    }
+//    .padding(.horizontal)
+//}
 
 @ViewBuilder
 private func UserFilterButton(_ userName: String) -> some View {
@@ -101,7 +103,7 @@ private func UserFilterButton(_ userName: String) -> some View {
 }
 
 @ViewBuilder
-private func WeekRow() -> some View {
+private func WeekRow(dateManager: DateManager) -> some View {
     VStack {
         HStack {
             Text("일")
@@ -134,13 +136,18 @@ private func WeekRow() -> some View {
                 .frame(maxWidth: .infinity)
         }
         .padding(.horizontal, 56)
+        
         HStack {
             ForEach(Array(0...6), id: \.self) { index in
-                let date = Calendar.current.date(byAdding: .day, value: index, to: tempData[0].selectedWeekStart)!
-                let day = Calendar.current.dateComponents([.day], from: date).day!.description
-                Text(day)
-                    .font(.system(size: 20))
-                    .frame(maxWidth: .infinity)
+                if let weekStart = dateManager.receivedScheduleData.map({ item in
+                    item["weekStart"]
+                }).first {
+                    let date = Calendar.current.date(byAdding: .day, value: index, to: weekStart as! Date)!
+                    let day = Calendar.current.dateComponents([.day], from: date).day!.description
+                    Text(day)
+                        .font(.system(size: 20))
+                        .frame(maxWidth: .infinity)
+                }
             }
         }
         .padding(.horizontal)

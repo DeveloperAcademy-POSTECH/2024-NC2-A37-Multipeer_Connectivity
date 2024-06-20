@@ -9,71 +9,70 @@ import MultipeerConnectivity
 
 
 struct ShareDetailView: View {
+    @ObservedObject var connectivityManager: MultipeerConnectivityManager
+    var dateManager: DateManager
+    var timeDotManager: TimeDotManager
+    
     @Binding var selectedPeer: MCPeerID?
-    @Binding var messageToSend : String
     @Binding var receivedPeers: [String]
-    @Binding var scheduleData: [[Any]]
-    @Binding var currentWeekStart: Date
     
     @State private var isShowingReceiveModal = false
     @State private var isShowingAlert = false
     @State private var peerToSendAlert: MCPeerID?
     @State private var showSuccessView = false
     
-    @ObservedObject var connectivityManager: MultipeerConnectivityManager
-    
-    @Binding var currentMonth: Int
-    @Binding var currentWeekOfMonth: Int
-    @Binding var selectedTimes: [SelectedTime]
-    
-    var dateManager: DateManager = DateManager()
-    var timeDotManager: TimeDotManager = TimeDotManager()
-    
     var body: some View {
-        
-        VStack{
-            
-            Text(messageToSend)
-                .opacity(0)
-                .font(.caption2)
-                .onAppear {
-                    let text = "\(dateManager.currentMonth)- \(dateManager.currentWeekOfMonth)-\(currentWeekStart)" +
-                    timeDotManager.calcSelectedTime(dateManager: dateManager)
-                        .map { "/\(String(describing: $0.day))& \(dateManager.timeFormatter.string(from: $0.startTime))&\(dateManager.timeFormatter.string(from: $0.endTime))&\($0.duration)" }
-                        .joined(separator: " - ")
-                    messageToSend = text
+        VStack {
+            NavigationLink {
+                CompleteScheduleView(dateManager: dateManager, timeDotManager: timeDotManager)
+            } label: {
+                HStack{
+                    Image("ShareSchedule")
+                    Text("스케줄 확정하기")
                 }
-        }
-        
-        
-        
-        Button(action: {
-            
-            if let peer = self.selectedPeer {
-                if connectivityManager.isConnected(peer: peer) {
-                    connectivityManager.send(text: messageToSend, to: peer)
-                    messageToSend = ""
-                    
-                    showSuccessView = true
-                } else {
-                    print("Peer \(peer.displayName) is not connected")
-                }
+                .padding()
+                .foregroundColor(AppColor.white)
+                .padding(.horizontal, 30)
+                .background(
+                    RoundedRectangle(cornerRadius: 30)
+                        .fill(AppColor.black)
+                )
             }
-            
-            
-        }) {
-            HStack{
-                Image("ShareSchedule")
-                Text("스케줄 공유하기")}
-            .padding()
-            .foregroundColor(AppColor.white)
-            .padding(.horizontal, 30)
-            .background(
-                RoundedRectangle(cornerRadius: 30)
-                    .fill(AppColor.black)
-            )
-            
-        }.fullScreenCover(isPresented: $showSuccessView) {
+
+
+            Button {
+                if let peer = self.selectedPeer {
+                    if connectivityManager.isConnected(peer: peer) {
+                        let text = "\(dateManager.currentMonth)-\(dateManager.currentWeekOfMonth)-\(DateManager.detailDateFormatter.string(from: dateManager.currentWeekStart))" +
+                        timeDotManager.calcSelectedTime(dateManager: dateManager)
+                            .map {
+                                "/\(String(describing: $0.day))&\(DateManager.timeFormatter.string(from: $0.startTime))&\(DateManager.timeFormatter.string(from: $0.endTime))&\($0.duration)"
+                            }
+                            .joined(separator: "-")
+                        
+                        connectivityManager.send(text: text, to: peer)
+                        
+                        showSuccessView = true
+                    } else {
+                        print("Peer \(peer.displayName) is not connected")
+                    }
+                }
+            } label: {
+                HStack{
+                    Image("ShareSchedule")
+                    Text("스케줄 공유하기")
+                }
+                .padding()
+                .foregroundColor(AppColor.white)
+                .padding(.horizontal, 30)
+                .background(
+                    RoundedRectangle(cornerRadius: 30)
+                        .fill(AppColor.black)
+                )
+                
+            }
+        }
+        .fullScreenCover(isPresented: $showSuccessView) {
             ShareSuccessView()
         }
         .onAppear {
@@ -83,13 +82,13 @@ struct ShareDetailView: View {
                 self.isShowingAlert = true
             }
             
-            print("selectedTimes in ShareDetailView: \(selectedTimes)")
+            print("selectedTimes in ShareDetailView: \(dateManager.selectedTimes)")
         }
-        .halfSheet(isPresented: $isShowingReceiveModal) {
+        .sheet(isPresented: $isShowingReceiveModal) {
             if let receivedData = connectivityManager.receivedData, let peer = self.peerToSendAlert {
-                ReceiveScheduleView(receivedData: receivedData, peerDisplayName: peer.displayName, isPresented: $isShowingReceiveModal, receivedPeers: $receivedPeers,scheduleData: $scheduleData)
+                ReceiveScheduleView(dateManager: dateManager, timeDotManager: timeDotManager, receivedData: receivedData, peerDisplayName: peer.displayName, isPresented: $isShowingReceiveModal, receivedPeers: $receivedPeers)
+                    .presentationDetents([.medium])
             }
-            
         }
         .alert(isPresented: $isShowingAlert) {
             let peerToSendAlert = self.peerToSendAlert
@@ -107,51 +106,50 @@ struct ShareDetailView: View {
     }
 }
 
-
-struct HalfSheet<SheetContent: View>: ViewModifier {
-    @Binding var isPresented: Bool
-    let sheetContent: SheetContent
-    
-    init(isPresented: Binding<Bool>, @ViewBuilder content: () -> SheetContent) {
-        self._isPresented = isPresented
-        self.sheetContent = content()
-    }
-    
-    func body(content: Content) -> some View {
-        content
-            .background(
-                HalfSheetPresenter(isPresented: $isPresented, sheetContent: sheetContent)
-            )
-    }
-}
-
-private struct HalfSheetPresenter<SheetContent: View>: UIViewControllerRepresentable {
-    @Binding var isPresented: Bool
-    let sheetContent: SheetContent
-    
-    func makeUIViewController(context: Context) -> UIViewController {
-        UIViewController()
-    }
-    
-    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
-        if isPresented {
-            let hostingController = UIHostingController(rootView: sheetContent)
-            hostingController.modalPresentationStyle = .pageSheet
-            uiViewController.present(hostingController, animated: true) {
-                if let presentationController = hostingController.presentationController as? UISheetPresentationController {
-                    presentationController.detents = [.medium()]
-                }
-            }
-        } else {
-            uiViewController.dismiss(animated: true, completion: nil)
-        }
-    }
-}
-
-extension View {
-    func halfSheet<SheetContent: View>(isPresented: Binding<Bool>, @ViewBuilder content: @escaping () -> SheetContent) -> some View {
-        self.modifier(HalfSheet(isPresented: isPresented, content: content))
-    }
-}
+//struct HalfSheet<SheetContent: View>: ViewModifier {
+//    @Binding var isPresented: Bool
+//    let sheetContent: SheetContent
+//    
+//    init(isPresented: Binding<Bool>, @ViewBuilder content: () -> SheetContent) {
+//        self._isPresented = isPresented
+//        self.sheetContent = content()
+//    }
+//    
+//    func body(content: Content) -> some View {
+//        content
+//            .background(
+//                HalfSheetPresenter(isPresented: $isPresented, sheetContent: sheetContent)
+//            )
+//    }
+//}
+//
+//private struct HalfSheetPresenter<SheetContent: View>: UIViewControllerRepresentable {
+//    @Binding var isPresented: Bool
+//    let sheetContent: SheetContent
+//    
+//    func makeUIViewController(context: Context) -> UIViewController {
+//        UIViewController()
+//    }
+//    
+//    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
+//        if isPresented {
+//            let hostingController = UIHostingController(rootView: sheetContent)
+//            hostingController.modalPresentationStyle = .pageSheet
+//            uiViewController.present(hostingController, animated: true) {
+//                if let presentationController = hostingController.presentationController as? UISheetPresentationController {
+//                    presentationController.detents = [.medium()]
+//                }
+//            }
+//        } else {
+//            uiViewController.dismiss(animated: true, completion: nil)
+//        }
+//    }
+//}
+//
+//extension View {
+//    func halfSheet<SheetContent: View>(isPresented: Binding<Bool>, @ViewBuilder content: @escaping () -> SheetContent) -> some View {
+//        self.modifier(HalfSheet(isPresented: isPresented, content: content))
+//    }
+//}
 
 

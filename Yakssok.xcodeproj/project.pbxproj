@@ -187,8 +187,8 @@
 				67412A482C1DC3F4005F8883 /* WeeklyCalendar.swift */,
 				675EE8E02C22F234000F4B58 /* CheckBoxToggleStyle.swift */,
 				675EE8E22C22FBC4000F4B58 /* CompleteScheduleTimeBlock.swift */,
-				67EB9E8A2C1C8D8800AA6A1A /* Extensions */,
 				675EE8E92C23C9E7000F4B58 /* TimeDotStyle.swift */,
+				67EB9E8A2C1C8D8800AA6A1A /* Extensions */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";

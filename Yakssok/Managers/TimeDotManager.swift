@@ -53,14 +53,16 @@ extension TimeDotManager {
         return selectedTimes
     }
     
-    func applyScheduleData(_ scheduleData: [ScheduleData], forWeekStart weekStart: Date) {
+    func applyScheduleData(_ scheduleData: [[SelectedTime]], forWeekStart weekStart: Date) {
+        clearDots()
+        
         var scheduleCount = Array(repeating: Array(repeating: 0, count: 7), count: 16)
         
         for data in scheduleData {
-            for selectedTime in data.selectedTimes {
-                let col = Calendar.current.dateComponents([.day], from: weekStart, to: selectedTime.startTime).day!
+            for selectedTime in data {
+                let col = selectedTime.day - Calendar.current.dateComponents([.day], from: weekStart).day!
                 let startRow = Calendar.current.component(.hour, from: selectedTime.startTime) - 9
-                let endRow = Calendar.current.component(.hour, from: selectedTime.endTime) - 9
+                let endRow = Calendar.current.component(.hour, from: selectedTime.endTime) != 0 ? Calendar.current.component(.hour, from: selectedTime.endTime) - 9 : 15
                 
                 if startRow >= 0 && endRow < dotStyles.count {
                     if dotStyles[startRow][col] == .end || dotStyles[startRow][col] == .transparentEnd {
@@ -88,7 +90,9 @@ extension TimeDotManager {
         highlightOverlappingSchedules(scheduleCount, scheduleData: scheduleData)
     }
     
-    func highlightOverlappingSchedules(_ scheduleCount: [[Int]], scheduleData: [ScheduleData]) {
+    // TODO: - 하나만 있는 경우 transparent 상태로 그려지지 않음겹치는 dot이 하나일 경우는 제외 필요
+    // TODO: - 겹치는 dot이 하나일 경우는 제외 필요
+    func highlightOverlappingSchedules(_ scheduleCount: [[Int]], scheduleData: [[SelectedTime]]) {
         for col in 0..<7 {
             var inOverlap = false
             var temp: TimeDotStyle = .none
@@ -114,7 +118,7 @@ extension TimeDotManager {
                     if inOverlap {
                         // End of an overlapping block
                         if dotStyles[row - 1][col] == .overlapMid {
-                            if dotStyles[row][col] == .none{
+                            if dotStyles[row][col] == .none {
                                 dotStyles[row - 1][col] = .overlapEndEnd
                             } else {
                                 dotStyles[row - 1][col] = .overlapEnd
@@ -130,6 +134,8 @@ extension TimeDotManager {
                 // If the last row was part of an overlapping block, mark it as the end
                 if dotStyles[15][col] == .mid {
                     dotStyles[15][col] = .end
+                } else if dotStyles[15][col] == .overlapMid {
+                    dotStyles[15][col] = .overlapEndEnd
                 }
             }
         }
